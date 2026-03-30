@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>How to Day Trade Gold (XAUUSD) in One Hour a Day | ORB System</title>
+<meta name="description" content="A complete, rules-based approach to trading XAUUSD in the New York session. One 60-minute window, defined entries, structured stops — no all-day screen time required.">
+<meta name="keywords" content="XAUUSD day trading, Gold trading strategy, NY session trading, opening range breakout Gold, XAUUSD system, how to trade Gold">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #C9A84C; --gold-light: #E8D5A3; --gold-dim: #8B6914;
+    --bg: #0E0E0F; --bg2: #161618; --bg3: #1E1E21;
+    --text: #F0EDE8; --text2: #A09C95; --text3: #6B6760;
+    --border: rgba(201,168,76,0.12); --border-s: rgba(201,168,76,0.28);
+    --green: #4CAF7D; --red: #E05C5C; --amber: #E8A84C;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  html { font-size: 16px; }
+  body {
+    background: var(--bg); color: var(--text);
+    font-family: 'DM Sans', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    line-height: 1.7;
+  }
+
+  /* NAV */
+  .site-nav {
+    border-bottom: 0.5px solid var(--border-s);
+    padding: 0 40px; height: 52px;
+    display: flex; align-items: center; justify-content: space-between;
+    position: sticky; top: 0; background: rgba(14,14,15,0.96);
+    backdrop-filter: blur(12px); z-index: 100;
+  }
+  .nav-brand { font-family: 'Instrument Serif', serif; font-size: 15px; color: var(--text); text-decoration: none; }
+  .nav-brand em { color: var(--gold); font-style: italic; }
+  .nav-link { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: var(--text3); text-decoration: none; transition: color .15s; }
+  .nav-link:hover { color: var(--gold); }
+
+  /* ARTICLE LAYOUT */
+  .article-wrap { max-width: 720px; margin: 0 auto; padding: 64px 24px 96px; }
+
+  /* HEADER */
+  .article-category { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: .18em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 16px; }
+  .article-title { font-family: 'Instrument Serif', serif; font-size: clamp(28px, 4vw, 42px); font-weight: 400; line-height: 1.15; letter-spacing: -.02em; margin-bottom: 14px; }
+  .article-title em { color: var(--gold); font-style: italic; }
+  .article-subtitle { font-size: 16px; color: var(--text2); line-height: 1.7; margin-bottom: 28px; max-width: 600px; }
+  .article-meta { display: flex; align-items: center; gap: 16px; padding: 14px 0; border-top: 0.5px solid var(--border); border-bottom: 0.5px solid var(--border); margin-bottom: 48px; font-family: 'DM Mono', monospace; font-size: 10px; color: var(--text3); letter-spacing: .06em; }
+  .meta-dot { width: 3px; height: 3px; border-radius: 50%; background: var(--border-s); }
+
+  /* BODY */
+  .article-body h2 { font-family: 'Instrument Serif', serif; font-size: 26px; font-weight: 400; color: var(--text); margin: 48px 0 16px; line-height: 1.25; }
+  .article-body h2 em { color: var(--gold); font-style: italic; }
+  .article-body h3 { font-family: 'DM Mono', monospace; font-size: 12px; letter-spacing: .12em; text-transform: uppercase; color: var(--gold-dim); margin: 32px 0 12px; }
+  .article-body p { font-size: 15px; color: var(--text2); line-height: 1.85; margin-bottom: 20px; }
+  .article-body p strong { color: var(--text); font-weight: 500; }
+  .article-body a { color: var(--gold); text-decoration: none; border-bottom: 0.5px solid rgba(201,168,76,0.3); }
+  .article-body a:hover { border-bottom-color: var(--gold); }
+
+  /* CALLOUT */
+  .callout { background: rgba(201,168,76,0.06); border: 0.5px solid var(--border-s); border-left: 3px solid var(--gold); border-radius: 0 8px 8px 0; padding: 16px 20px; margin: 28px 0; }
+  .callout p { margin: 0; font-size: 14px; color: var(--text2); }
+  .callout strong { color: var(--gold-light); }
+
+  /* TABLE */
+  .data-table { width: 100%; border-collapse: collapse; margin: 28px 0; font-size: 13px; font-family: 'DM Mono', monospace; }
+  .data-table th { text-align: left; font-size: 9px; letter-spacing: .14em; text-transform: uppercase; color: var(--text3); padding: 0 12px 10px 0; font-weight: 400; border-bottom: 0.5px solid var(--border-s); }
+  .data-table td { padding: 10px 12px 10px 0; border-bottom: 0.5px solid var(--border); color: var(--text2); vertical-align: top; line-height: 1.5; }
+  .data-table tr:last-child td { border-bottom: none; }
+
+  /* LIST */
+  .article-body ul { list-style: none; margin: 16px 0 24px; display: flex; flex-direction: column; gap: 8px; }
+  .article-body ul li { font-size: 15px; color: var(--text2); line-height: 1.75; padding-left: 20px; position: relative; }
+  .article-body ul li::before { content: '→'; position: absolute; left: 0; color: var(--gold-dim); font-family: 'DM Mono', monospace; font-size: 12px; top: 3px; }
+
+  /* CTA BOX */
+  .cta-box { background: var(--bg2); border: 0.5px solid var(--border-s); border-radius: 12px; padding: 28px 32px; margin: 56px 0 0; }
+  .cta-box h3 { font-family: 'Instrument Serif', serif; font-size: 22px; font-weight: 400; color: var(--text); margin-bottom: 8px; }
+  .cta-box h3 em { color: var(--gold); font-style: italic; }
+  .cta-box p { font-size: 13px; color: var(--text2); line-height: 1.75; margin-bottom: 20px; }
+  .cta-btn { display: inline-block; padding: 12px 24px; background: rgba(201,168,76,.12); border: 0.5px solid var(--gold); border-radius: 6px; font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--gold); text-decoration: none; transition: background .15s; }
+  .cta-btn:hover { background: rgba(201,168,76,.22); border-bottom: 0.5px solid var(--gold); }
+
+  /* DIVIDER */
+  .rule { height: 0.5px; background: linear-gradient(90deg, var(--border-s), transparent); margin: 40px 0; border: none; }
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="/" class="nav-brand">Gold Standard <em>ORB</em></a>
+  <a href="/#get-guide" class="nav-link">Free Guide →</a>
+</nav>
+
+<article class="article-wrap" itemscope itemtype="https://schema.org/Article">
+  <meta itemprop="author" content="ORB System">
+  <meta itemprop="datePublished" content="2026-04-01">
+
+  <div class="article-category">Strategy · XAUUSD · NY Session</div>
+
+  <h1 class="article-title" itemprop="headline">How to Day Trade Gold in <em>One Hour a Day</em></h1>
+
+  <p class="article-subtitle">Most Gold traders believe consistent results require all-day screen time. They're wrong. Here's a structured, rules-based approach built entirely around a single 60-minute window.</p>
+
+  <div class="article-meta">
+    <span>ORB System</span>
+    <span class="meta-dot"></span>
+    <span>8 min read</span>
+    <span class="meta-dot"></span>
+    <span>XAUUSD · NY Opening Range</span>
+  </div>
+
+  <div class="article-body" itemprop="articleBody">
+
+    <p>The most common reason traders quit Gold isn't losses. It's exhaustion. Watching XAUUSD tick by tick across multiple sessions, making discretionary decisions under pressure, second-guessing every candle — it's unsustainable alongside a full-time job or any other serious commitment.</p>
+
+    <p>The approach described here solves that problem directly. It trades a single instrument, in a single session, using a complete set of rules that govern every decision from pre-session bias to position exit. The entire active window is 60 minutes. Pre-session preparation takes 20 minutes. Nothing after 14:45 UTC.</p>
+
+    <p>This isn't a simplified or dumbed-down approach. The rules are specific and the filters are strict. But the <strong>structure is the point</strong> — it's what makes consistent execution possible for someone who can't sit in front of charts all day.</p>
+
+    <hr class="rule">
+
+    <h2>Why the <em>New York Open</em></h2>
+
+    <p>Gold's New York opening session — the period beginning at 13:30 UTC — is consistently the highest-volume, highest-volatility 90-minute window in the Gold trading day. This isn't coincidence. It's the overlap of European session close and US market open, combined with the release of most major US economic data.</p>
+
+    <p>For day traders, volume and volatility are the environment that makes structured directional moves possible. A market that barely moves gives you nothing to work with regardless of how good your system is.</p>
+
+    <p>The specific edge in this session comes from understanding what the London session — which runs from approximately 08:00 to 13:00 UTC — did before New York opened. London's behaviour is the primary input that determines whether and how to trade the New York open.</p>
+
+    <div class="callout">
+      <p><strong>Key concept:</strong> Markets follow a three-phase cycle — accumulation during Asia, manipulation during London, and distribution during New York. Trading the NY opening range is trading the distribution phase. Understanding what happened in London is what tells you which direction that distribution is likely to take.</p>
+    </div>
+
+    <h2>The Structure of the <em>System</em></h2>
+
+    <h3>Step 1 — Pre-session preparation (before 13:30 UTC)</h3>
+
+    <p>Before the opening range forms, three questions need answers:</p>
+
+    <ul>
+      <li><strong>What is the M5 bias?</strong> The 200-period EMA on the 5-minute chart tells you the directional lean. Price above a flat or rising EMA gives long permission. Price below a flat or falling EMA gives short permission.</li>
+      <li><strong>What did London do?</strong> This is the most important pre-session step. Was London tight and compressed, or did it sweep a key level and reverse? Did it trend into a named level and stall? The answer determines your position size and minimum score threshold.</li>
+      <li><strong>Are there any high-impact news events?</strong> USD data releases within 10 minutes of the session window are avoided entirely.</li>
+    </ul>
+
+    <h3>Step 2 — The opening range (13:30–13:45 UTC)</h3>
+
+    <p>The first 15 minutes of the New York session define the opening range. The high and low of this 15-minute candle sequence become your primary reference lines for the session. <strong>No trades are taken during this window.</strong> You watch, you draw the levels, and at 13:45 you run two checks before doing anything else.</p>
+
+    <p>The first check is the ATR filter. The OR width — the distance between the high and low — must fall between 0.5× and 3.0× the 14-period ATR on the 1-minute chart. An OR that is too narrow has insufficient range to produce a meaningful trade. An OR that is too wide is typically driven by news and is structurally unpredictable. If the OR fails this filter, there is no trade today regardless of how good the setup looks.</p>
+
+    <p>The second check is the A+ scorecard — nine criteria covering EMA alignment, London profile quality, liquidity target visibility, breakout candle quality, and H4 structure. Each criterion scores one point. The minimum required score varies by London profile type.</p>
+
+    <h3>Step 3 — Entry (13:45–14:45 UTC)</h3>
+
+    <p>The preferred entry pattern is the retest and reclaim. A 1-minute candle closes outside the OR boundary with a body filling more than 60% of its range — this is the breakout confirmation. Price then pulls back to the OR boundary, and the next candle that closes back in the breakout direction triggers the entry. This pattern filters out false breakouts, which are the primary source of losing trades in OR strategies.</p>
+
+    <p>The stop loss is placed at the opposite OR boundary — the full OR width away from entry. This is a structural stop. It only fires if the entire breakout fails and price re-enters the range completely. In practice this produces a maximum loss of exactly 1R, which is the OR width expressed as a risk multiple.</p>
+
+    <p><strong>Breakeven rule:</strong> when price reaches 1R in profit, the stop is moved to the entry price. The worst possible outcome at that point is 0R — you cannot lose money on the trade.</p>
+
+    <p><strong>Target:</strong> 2.5R from entry, or the nearest named liquidity level — whichever is closer.</p>
+
+    <h3>Step 4 — Session close (14:45 UTC hard stop)</h3>
+
+    <p>No new entries are taken after 14:45 UTC. This rule is absolute. Open trades continue to their stop or target regardless of time, but the trade window is closed. Maximum two trades per session. Stop trading for the day if the session reaches −2R.</p>
+
+    <hr class="rule">
+
+    <h2>The London Profile — <em>The Most Important Step</em></h2>
+
+    <p>Most traders who discover opening range strategies focus almost entirely on the OR itself — the breakout candle, the body quality, the ATR filter. These matter. But the single most impactful factor in the system's edge is the London profile classification done before 13:30.</p>
+
+    <p>There are four profile types:</p>
+
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Profile</th>
+          <th>London behaviour</th>
+          <th>Position size</th>
+          <th>Min score</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td style="color:#3DB8A0;font-weight:500">Rule 1</td>
+          <td>Tight — stays within Asian range, no move</td>
+          <td style="color:#4CAF7D">Full</td>
+          <td style="color:#3DB8A0">4 points</td>
+        </tr>
+        <tr>
+          <td style="color:#E8A84C;font-weight:500">Rule 2</td>
+          <td>Sweeps a key level then reverses sharply</td>
+          <td style="color:#4CAF7D">Full</td>
+          <td style="color:#E8A84C">4 points</td>
+        </tr>
+        <tr>
+          <td style="color:#5B9BD5;font-weight:500">Rule 3A</td>
+          <td>Trends into a named level and stalls</td>
+          <td style="color:#E8A84C">Half</td>
+          <td style="color:#E8A84C">6 points</td>
+        </tr>
+        <tr>
+          <td style="color:#A09C95;font-weight:500">Rule 3B</td>
+          <td>Drifts without reaching any named level</td>
+          <td style="color:#E8A84C">Half or skip</td>
+          <td style="color:#E05C5C">7 points</td>
+        </tr>
+        <tr>
+          <td style="color:#6B6760">Rule 4</td>
+          <td>Multiple reversals, no readable direction</td>
+          <td style="color:#E05C5C">No trade</td>
+          <td style="color:#E05C5C">—</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>Rule 1 and Rule 2 days are the highest-conviction sessions. London has done something specific and readable. New York is expected to distribute cleanly in the determined direction.</p>
+
+    <p>Rule 4 days — where London has whipsawed with no consistent narrative — are skipped entirely. Not reduced. Skipped. The discipline to close the charts on a Rule 4 day and log a no-trade session is one of the most valuable skills in the system.</p>
+
+    <hr class="rule">
+
+    <h2>Why <em>Rules-Based</em> Matters More Than You Think</h2>
+
+    <p>Discretionary trading — where every decision is a fresh judgment call — has a fundamental problem that is rarely discussed honestly. The quality of discretionary decisions degrades under pressure, after losses, when tired, and when the market is doing something unexpected. In other words, exactly when good decision-making matters most, it's least available.</p>
+
+    <p>A rules-based system doesn't eliminate losses. But it does something more valuable: it makes your performance data <strong>meaningful</strong>. When every trade follows the same rules, your session log tells you something real — which profiles produce the best results for you, what days of the week are strongest, whether your score correlates with outcomes. Over 50 sessions this data is more valuable than anything you could learn from a course.</p>
+
+    <p>The session dashboard that accompanies this system captures all of this automatically. London profile, A+ score, entry pattern, result, rule adherence, session tags. The analytics build your personal edge picture over time without requiring manual work.</p>
+
+    <hr class="rule">
+
+    <h2>Is This Right for You?</h2>
+
+    <p>This system works well for a specific type of trader. If several of these apply, it is worth exploring seriously:</p>
+
+    <ul>
+      <li>You can be available for the 13:00–14:45 UTC window on trading days</li>
+      <li>You trade or want to trade Gold specifically — not a basket of instruments</li>
+      <li>You want defined rules for every decision rather than relying on feel</li>
+      <li>You want to build a personal performance record from your own sessions</li>
+      <li>You value a system that has been thoroughly tested rather than one you are designing as you go</li>
+    </ul>
+
+    <p>It is not suitable for traders who want to trade multiple sessions, need a signal service to tell them what to do, or are complete beginners with no understanding of basic chart reading and candlestick structure.</p>
+
+    <hr class="rule">
+
+    <h2>The <em>Free Starting Point</em></h2>
+
+    <p>The London profile classification is the most important pre-session skill in this system and the one most traders get wrong when they first encounter it. A free one-page visual guide covering all four profile types — including the decision tree used to classify any session in under two minutes — is available below.</p>
+
+    <p>It's a genuine standalone resource. Understanding what London did before the NY open will change how you read Gold sessions regardless of what system you trade.</p>
+
+  </div>
+
+  <div class="cta-box">
+    <h3>The <em>4 London Profiles</em> — Free Guide</h3>
+    <p>Classify any London session before 13:30 UTC. Know your position size and score threshold before the opening range forms. Download the free visual reference guide — one page, permanent keep.</p>
+    <a href="/#get-guide" class="cta-btn">Download free guide →</a>
+  </div>
+
+</article>
+
+</body>
+</html>
