@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Articles — Gold Standard ORB System</title>
+<meta name="description" content="Trading strategy guides, session analysis, and process documentation for structured XAUUSD day traders.">
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold:#C9A84C;--gold-light:#E8D5A3;--gold-dim:#8B6914;
+    --bg:#0E0E0F;--bg2:#161618;--bg3:#1E1E21;
+    --text:#F0EDE8;--text2:#A09C95;--text3:#6B6760;
+    --border:rgba(201,168,76,0.12);--border-s:rgba(201,168,76,0.28);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{font-size:16px}
+  body{background:var(--bg);color:var(--text);font-family:'DM Sans',sans-serif;-webkit-font-smoothing:antialiased;line-height:1.7}
+
+  /* NAV */
+  .site-nav{border-bottom:.5px solid var(--border-s);padding:0 40px;height:52px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:rgba(14,14,15,0.96);backdrop-filter:blur(12px);z-index:100}
+  .nav-brand{font-family:'Instrument Serif',serif;font-size:15px;color:var(--text);text-decoration:none}
+  .nav-brand em{color:var(--gold);font-style:italic}
+  .nav-links{display:flex;align-items:center;gap:28px}
+  .nav-link{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);text-decoration:none;transition:color .15s}
+  .nav-link:hover{color:var(--gold)}
+  .nav-link.active{color:var(--gold)}
+
+  /* PAGE */
+  .wrap{max-width:780px;margin:0 auto;padding:64px 24px 96px}
+
+  /* HEADER */
+  .page-eyebrow{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold-dim);margin-bottom:14px}
+  .page-title{font-family:'Instrument Serif',serif;font-size:clamp(28px,4vw,40px);font-weight:400;line-height:1.15;letter-spacing:-.02em;margin-bottom:12px}
+  .page-title em{color:var(--gold);font-style:italic}
+  .page-sub{font-size:14px;color:var(--text2);line-height:1.75;max-width:540px;margin-bottom:48px}
+
+  /* ARTICLE CARDS */
+  .articles{display:flex;flex-direction:column;gap:0}
+
+  .article-card{
+    display:block;text-decoration:none;
+    padding:28px 0;
+    border-bottom:.5px solid var(--border);
+    transition:all .15s;
+  }
+  .article-card:first-child{border-top:.5px solid var(--border)}
+  .article-card:hover .article-card-title{color:var(--gold)}
+  .article-card:hover .article-card-arrow{color:var(--gold);transform:translateX(4px)}
+
+  .article-card-meta{
+    font-family:'DM Mono',monospace;font-size:10px;
+    letter-spacing:.1em;text-transform:uppercase;
+    color:var(--text3);margin-bottom:10px;
+    display:flex;align-items:center;gap:12px;
+  }
+  .meta-dot{width:3px;height:3px;border-radius:50%;background:var(--border-s)}
+
+  .article-card-title{
+    font-family:'Instrument Serif',serif;
+    font-size:clamp(20px,2.5vw,26px);font-weight:400;
+    color:var(--text);line-height:1.2;letter-spacing:-.01em;
+    margin-bottom:10px;transition:color .15s;
+  }
+  .article-card-title em{color:var(--gold);font-style:italic}
+
+  .article-card-desc{
+    font-size:14px;color:var(--text2);line-height:1.75;
+    max-width:580px;margin-bottom:14px;
+  }
+
+  .article-card-footer{display:flex;align-items:center;justify-content:space-between}
+
+  .article-card-tags{display:flex;gap:8px;flex-wrap:wrap}
+  .tag{
+    font-family:'DM Mono',monospace;font-size:9px;
+    letter-spacing:.1em;text-transform:uppercase;
+    padding:3px 8px;border-radius:3px;
+    background:var(--bg3);border:.5px solid var(--border-s);
+    color:var(--text3);
+  }
+
+  .article-card-arrow{
+    font-family:'DM Mono',monospace;font-size:12px;
+    color:var(--text3);transition:all .15s;flex-shrink:0;
+  }
+
+  /* CTA */
+  .cta-strip{
+    margin-top:56px;
+    background:var(--bg2);border:.5px solid var(--border-s);
+    border-radius:10px;padding:24px 28px;
+    display:flex;align-items:center;justify-content:space-between;
+    gap:20px;flex-wrap:wrap;
+  }
+  .cta-strip-text h3{font-family:'Instrument Serif',serif;font-size:18px;font-weight:400;color:var(--text);margin-bottom:4px}
+  .cta-strip-text h3 em{color:var(--gold);font-style:italic}
+  .cta-strip-text p{font-size:12px;color:var(--text2);line-height:1.65}
+  .cta-btn{
+    display:inline-block;padding:11px 22px;
+    background:rgba(201,168,76,.1);border:.5px solid var(--gold);
+    border-radius:6px;font-family:'DM Mono',monospace;
+    font-size:11px;letter-spacing:.08em;text-transform:uppercase;
+    color:var(--gold);text-decoration:none;
+    transition:background .15s;white-space:nowrap;flex-shrink:0;
+  }
+  .cta-btn:hover{background:rgba(201,168,76,.2)}
+</style>
+</head>
+<body>
+
+<nav class="site-nav">
+  <a href="/" class="nav-brand">Gold Standard <em>ORB</em></a>
+  <div class="nav-links">
+    <a href="/blog" class="nav-link active">Articles</a>
+    <a href="/#get-guide" class="nav-link">Free Guide →</a>
+  </div>
+</nav>
+
+<div class="wrap">
+
+  <div class="page-eyebrow">Strategy · Process · Education</div>
+  <h1 class="page-title">Articles &amp; <em>Guides</em></h1>
+  <p class="page-sub">Practical writing on structured Gold trading, session process, and the habits that separate consistently improving traders from those who stay stuck.</p>
+
+  <div class="articles">
+
+    <!-- Article 1 -->
+    <a href="/blog/blog-post-1-xauusd-one-hour-trading.html" class="article-card">
+      <div class="article-card-meta">
+        <span>Strategy · XAUUSD</span>
+        <span class="meta-dot"></span>
+        <span>8 min read</span>
+      </div>
+      <div class="article-card-title">How to Day Trade Gold in <em>One Hour a Day</em></div>
+      <p class="article-card-desc">A complete, rules-based approach to trading XAUUSD in the New York session. One 60-minute window, defined entries, structural stops — no all-day screen time required.</p>
+      <div class="article-card-footer">
+        <div class="article-card-tags">
+          <span class="tag">NY Session</span>
+          <span class="tag">London Profiles</span>
+          <span class="tag">Opening Range</span>
+        </div>
+        <span class="article-card-arrow">Read →</span>
+      </div>
+    </a>
+
+    <!-- Article 2 -->
+    <a href="/blog/blog-post-2-why-traders-never-improve.html" class="article-card">
+      <div class="article-card-meta">
+        <span>Psychology · Process</span>
+        <span class="meta-dot"></span>
+        <span>7 min read</span>
+      </div>
+      <div class="article-card-title">Why Most Traders Never Improve — And the <em>One Habit</em> That Changes It</div>
+      <p class="article-card-desc">It isn't the strategy. It isn't the indicators. The single biggest reason consistent profitability stays out of reach is the absence of one specific daily habit that almost nobody does properly.</p>
+      <div class="article-card-footer">
+        <div class="article-card-tags">
+          <span class="tag">Trading Journal</span>
+          <span class="tag">Discipline</span>
+          <span class="tag">Process</span>
+        </div>
+        <span class="article-card-arrow">Read →</span>
+      </div>
+    </a>
+
+  </div>
+
+  <div class="cta-strip">
+    <div class="cta-strip-text">
+      <h3>Start with the free <em>London Profiles guide</em></h3>
+      <p>Classify any session before 13:30 UTC. One page, permanently useful, free to download.</p>
+    </div>
+    <a href="/#get-guide" class="cta-btn">Download free →</a>
+  </div>
+
+</div>
+
+</body>
+</html>
