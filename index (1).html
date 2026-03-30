@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gold Standard ORB System — XAUUSD NY Session Trading</title>
+<meta name="description" content="A rules-based XAUUSD day trading system built around a single 60-minute window. Download the free London Profiles guide and join the waitlist for early access.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --gold:        #C9A84C;
+    --gold-light:  #E8D5A3;
+    --gold-dim:    #8B6914;
+    --bg:          #0A0A0B;
+    --bg2:         #111113;
+    --bg3:         #18181B;
+    --border:      rgba(201,168,76,0.12);
+    --border-mid:  rgba(201,168,76,0.22);
+    --border-str:  rgba(201,168,76,0.35);
+    --text:        #F0EDE8;
+    --text2:       #A09C95;
+    --text3:       #5A5750;
+    --green:       #4CAF7D;
+    --red:         #E05C5C;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    line-height: 1.6;
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body::before {
+    content: '';
+    position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+    opacity: 0.35; pointer-events: none; z-index: 0;
+  }
+
+  .grid-bg {
+    position: fixed; inset: 0;
+    background-image:
+      linear-gradient(rgba(201,168,76,0.025) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(201,168,76,0.025) 1px, transparent 1px);
+    background-size: 60px 60px;
+    pointer-events: none; z-index: 0;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 100%);
+  }
+
+  .wrap { position: relative; z-index: 1; max-width: 740px; margin: 0 auto; padding: 0 24px; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    padding: 15px 32px;
+    display: flex; align-items: center; justify-content: space-between;
+    background: rgba(10,10,11,0.85);
+    backdrop-filter: blur(14px);
+    border-bottom: 0.5px solid var(--border);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .nav-wordmark { font-family: 'Instrument Serif', serif; font-size: 15px; color: var(--gold-light); }
+  .nav-right { display: flex; align-items: center; gap: 14px; }
+  .nav-x {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 11px; color: var(--text3); text-decoration: none;
+    letter-spacing: 0.04em; transition: color 0.2s;
+  }
+  .nav-x:hover { color: var(--text2); }
+  .nav-x svg { width: 13px; height: 13px; fill: currentColor; }
+  .nav-cta {
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 8px 18px; border: 0.5px solid var(--border-str);
+    background: rgba(201,168,76,0.08); color: var(--gold);
+    border-radius: 4px; cursor: pointer; text-decoration: none;
+    transition: background 0.2s;
+  }
+  .nav-cta:hover { background: rgba(201,168,76,0.16); }
+
+  /* HERO */
+  .hero { position: relative; padding: 150px 0 72px; text-align: center; }
+  .hero-glow {
+    position: absolute; top: -180px; left: 50%; transform: translateX(-50%);
+    width: 640px; height: 640px;
+    background: radial-gradient(ellipse, rgba(201,168,76,0.07) 0%, transparent 68%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--gold-dim); border: 0.5px solid var(--border);
+    padding: 6px 14px; border-radius: 2px; margin-bottom: 26px;
+    opacity: 0; animation: fadeUp 0.7s 0.15s forwards;
+  }
+  .hero-eyebrow::before {
+    content: ''; width: 4px; height: 4px; border-radius: 50%;
+    background: var(--gold); animation: pulse 2.4s infinite;
+  }
+  .hero-h1 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(36px, 6.5vw, 60px); font-weight: 400;
+    line-height: 1.1; letter-spacing: -0.02em; margin-bottom: 22px;
+    opacity: 0; animation: fadeUp 0.7s 0.28s forwards;
+  }
+  .hero-h1 em { font-style: italic; color: var(--gold); }
+  .hero-sub {
+    font-size: 13px; color: var(--text2); line-height: 1.85;
+    max-width: 500px; margin: 0 auto 48px;
+    opacity: 0; animation: fadeUp 0.7s 0.42s forwards;
+  }
+
+  /* OFFER BOX */
+  .offer-box {
+    max-width: 500px; margin: 0 auto;
+    background: linear-gradient(135deg, rgba(201,168,76,0.07) 0%, rgba(201,168,76,0.03) 100%);
+    border: 0.5px solid var(--border-str); border-radius: 10px;
+    padding: 28px 28px 24px; text-align: left;
+    opacity: 0; animation: fadeUp 0.7s 0.56s forwards;
+    position: relative; overflow: hidden;
+  }
+  .offer-box::before {
+    content: ''; position: absolute; top: -50px; right: -50px;
+    width: 180px; height: 180px;
+    background: radial-gradient(circle, rgba(201,168,76,0.07), transparent 70%);
+    pointer-events: none;
+  }
+  .offer-badge {
+    display: inline-flex; align-items: center; gap: 7px;
+    font-size: 9px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--gold); background: rgba(201,168,76,0.1);
+    border: 0.5px solid rgba(201,168,76,0.25);
+    padding: 4px 10px; border-radius: 2px; margin-bottom: 14px;
+  }
+  .offer-badge::before { content: ''; width: 3px; height: 3px; border-radius: 50%; background: var(--gold); }
+  .offer-title {
+    font-family: 'Instrument Serif', serif; font-size: 20px;
+    font-weight: 400; line-height: 1.3; margin-bottom: 8px;
+  }
+  .offer-title em { font-style: italic; color: var(--gold); }
+  .offer-desc { font-size: 11px; color: var(--text2); line-height: 1.75; margin-bottom: 18px; }
+  .offer-what { display: flex; flex-direction: column; gap: 7px; margin-bottom: 20px; }
+  .offer-line {
+    display: flex; align-items: flex-start; gap: 9px;
+    font-size: 11px; color: var(--text2); line-height: 1.5;
+  }
+  .offer-line::before {
+    content: '✦'; color: var(--gold); font-size: 7px;
+    flex-shrink: 0; margin-top: 3px;
+  }
+
+  /* FORMS */
+  .form-row { display: flex; gap: 8px; margin-bottom: 10px; }
+  .form-input {
+    flex: 1; min-width: 0;
+    background: rgba(10,10,11,0.7); border: 0.5px solid var(--border-mid);
+    border-radius: 4px; padding: 11px 14px;
+    font-family: 'DM Mono', monospace; font-size: 12px; color: var(--text);
+    outline: none; transition: border-color 0.2s;
+  }
+  .form-input::placeholder { color: var(--text3); }
+  .form-input:focus { border-color: var(--gold); }
+  .form-btn {
+    padding: 11px 20px; background: var(--gold); color: #0A0A0B;
+    border: none; border-radius: 4px;
+    font-family: 'DM Mono', monospace; font-size: 11px;
+    font-weight: 500; letter-spacing: 0.05em;
+    cursor: pointer; white-space: nowrap; flex-shrink: 0;
+    transition: opacity 0.2s, transform 0.12s;
+  }
+  .form-btn:hover { opacity: 0.87; transform: translateY(-1px); }
+  .form-btn:active { transform: translateY(0); }
+  .form-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+  .form-note { font-size: 10px; color: var(--text3); line-height: 1.6; }
+  .form-success {
+    display: none; padding: 13px 15px;
+    background: rgba(76,175,125,0.06);
+    border: 0.5px solid rgba(76,175,125,0.25);
+    border-radius: 6px; font-size: 11px; color: var(--green); line-height: 1.7;
+  }
+
+  /* STATS */
+  .stats-row {
+    display: flex; border: 0.5px solid var(--border);
+    border-radius: 6px; overflow: hidden; margin: 52px 0;
+  }
+  .stat {
+    flex: 1; padding: 18px 10px; text-align: center;
+    background: var(--bg2); border-right: 0.5px solid var(--border);
+  }
+  .stat:last-child { border-right: none; }
+  .stat-val { font-family: 'Instrument Serif', serif; font-size: 24px; color: var(--gold-light); line-height: 1; margin-bottom: 5px; }
+  .stat-val em { font-style: italic; }
+  .stat-label { font-size: 9px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--text3); line-height: 1.4; }
+
+  /* SECTION FURNITURE */
+  .divider {
+    display: flex; align-items: center; gap: 14px;
+    margin: 56px 0 44px;
+  }
+  .divider::before, .divider::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
+  .divider span { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--text3); white-space: nowrap; }
+  .section-label {
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--gold-dim); margin-bottom: 12px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .section-label::after { content: ''; flex: 1; height: 0.5px; background: var(--border); }
+  .section-h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(24px, 4vw, 34px); font-weight: 400;
+    letter-spacing: -0.02em; line-height: 1.2; margin-bottom: 18px;
+  }
+  .section-h2 em { font-style: italic; color: var(--gold); }
+  .body-text { font-size: 13px; color: var(--text2); line-height: 1.85; margin-bottom: 14px; }
+
+  /* CARDS */
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 28px 0; }
+  .card {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: 8px; padding: 20px 18px 18px;
+    transition: border-color 0.2s;
+  }
+  .card:hover { border-color: var(--border-mid); }
+  .card-icon { font-size: 16px; margin-bottom: 10px; }
+  .card-title { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 6px; }
+  .card-desc { font-size: 11px; color: var(--text2); line-height: 1.7; }
+
+  /* TIMELINE */
+  .timeline { margin: 28px 0; padding-left: 24px; border-left: 0.5px solid var(--border); }
+  .tl-item { position: relative; padding-left: 18px; margin-bottom: 24px; }
+  .tl-item:last-child { margin-bottom: 0; }
+  .tl-dot {
+    position: absolute; left: -31px; top: 3px;
+    width: 13px; height: 13px; border-radius: 50%;
+    background: var(--bg); border: 0.5px solid var(--border-str);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .tl-dot::after { content: ''; width: 4px; height: 4px; border-radius: 50%; background: var(--gold); }
+  .tl-time { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; color: var(--gold-dim); margin-bottom: 3px; }
+  .tl-title { font-size: 13px; font-weight: 500; color: var(--text); margin-bottom: 4px; }
+  .tl-desc { font-size: 11px; color: var(--text2); line-height: 1.7; }
+
+  /* INCLUDED */
+  .included-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 14px 16px; background: var(--bg2);
+    border: 0.5px solid var(--border); border-radius: 8px;
+  }
+  .inc-check {
+    width: 16px; height: 16px; border-radius: 3px;
+    background: rgba(201,168,76,0.08); border: 0.5px solid var(--border-str);
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0; margin-top: 1px; font-size: 8px; color: var(--gold);
+  }
+  .inc-name { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+  .inc-desc { font-size: 10px; color: var(--text3); line-height: 1.55; }
+
+  /* FOR WHO */
+  .for-who-card {
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: 10px; padding: 26px 26px 22px; margin: 28px 0;
+  }
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+  .list-label { font-size: 9px; letter-spacing: 0.14em; text-transform: uppercase; margin-bottom: 12px; }
+  .list-label.pos { color: var(--green); }
+  .list-label.neg { color: var(--text3); }
+  .check-list { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+  .check-list li {
+    display: flex; align-items: flex-start; gap: 9px;
+    font-size: 11px; color: var(--text2); line-height: 1.55;
+  }
+  .check-list li::before { content: '✦'; color: var(--gold); font-size: 7px; flex-shrink: 0; margin-top: 4px; }
+  .cross-list li { color: var(--text3); }
+  .cross-list li::before { content: '×'; color: var(--text3); font-size: 11px; margin-top: 1px; }
+
+  /* X STRIP */
+  .x-strip {
+    display: flex; align-items: center; justify-content: space-between; gap: 16px;
+    background: var(--bg2); border: 0.5px solid var(--border);
+    border-radius: 8px; padding: 16px 20px; margin: 28px 0;
+    text-decoration: none; transition: border-color 0.2s;
+  }
+  .x-strip:hover { border-color: var(--border-mid); }
+  .x-strip-left { display: flex; align-items: center; gap: 12px; }
+  .x-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: rgba(201,168,76,0.08); border: 0.5px solid var(--border-str);
+    display: flex; align-items: center; justify-content: center; flex-shrink: 0;
+  }
+  .x-avatar svg { width: 16px; height: 16px; fill: var(--gold); }
+  .x-handle { font-size: 12px; font-weight: 500; color: var(--text); margin-bottom: 2px; }
+  .x-desc { font-size: 10px; color: var(--text3); }
+  .x-follow-btn {
+    font-size: 10px; letter-spacing: 0.08em; text-transform: uppercase;
+    padding: 7px 14px; border: 0.5px solid var(--border-mid);
+    border-radius: 3px; color: var(--text2); white-space: nowrap; flex-shrink: 0;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .x-strip:hover .x-follow-btn { color: var(--text); border-color: var(--border-str); }
+
+  /* BOTTOM CTA */
+  .bottom-cta {
+    text-align: center; padding: 64px 0 72px;
+    border-top: 0.5px solid var(--border); margin-top: 64px;
+  }
+  .bottom-cta h2 {
+    font-family: 'Instrument Serif', serif;
+    font-size: clamp(26px, 4.5vw, 40px); font-weight: 400;
+    letter-spacing: -0.02em; line-height: 1.15; margin-bottom: 14px;
+  }
+  .bottom-cta h2 em { font-style: italic; color: var(--gold); }
+  .bottom-cta p { font-size: 12px; color: var(--text2); margin-bottom: 32px; line-height: 1.75; }
+  .bottom-form { max-width: 440px; margin: 0 auto; }
+
+  /* FOOTER */
+  footer { border-top: 0.5px solid var(--border); padding: 24px 0; text-align: center; }
+  .footer-logo { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 14px; text-decoration: none; }
+  .footer-links { display: flex; justify-content: center; gap: 20px; margin-bottom: 16px; }
+  .footer-links a { font-size: 10px; color: var(--text3); text-decoration: none; letter-spacing: 0.06em; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--text2); }
+  .footer-disclaimer { font-size: 10px; color: var(--text3); line-height: 1.8; max-width: 520px; margin: 0 auto; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.25; } }
+  .fade-in { opacity: 0; transform: translateY(14px); transition: opacity 0.55s ease, transform 0.55s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+  /* MOBILE */
+  @media (max-width: 580px) {
+    nav { padding: 13px 18px; }
+    .nav-wordmark { display: none; }
+    .hero { padding: 118px 0 56px; }
+    .stats-row { flex-wrap: wrap; }
+    .stat { flex-basis: 50%; border-bottom: 0.5px solid var(--border); }
+    .stat:nth-child(3), .stat:nth-child(4) { border-bottom: none; }
+    .stat:nth-child(odd) { border-right: 0.5px solid var(--border); }
+    .grid-2 { grid-template-columns: 1fr; }
+    .two-col { grid-template-columns: 1fr; gap: 18px; }
+    .form-row { flex-direction: column; }
+    .offer-box { padding: 22px 18px 20px; }
+    .x-strip { flex-direction: column; align-items: flex-start; gap: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="grid-bg"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <svg width="26" height="26" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="14" cy="14" r="13" stroke="rgba(201,168,76,0.28)" stroke-width="0.5"/>
+      <circle cx="14" cy="14" r="8.5" stroke="rgba(201,168,76,0.12)" stroke-width="0.5"/>
+      <line x1="14" y1="1.5" x2="14" y2="6" stroke="#C9A84C" stroke-width="1.2"/>
+      <line x1="14" y1="22" x2="14" y2="26.5" stroke="rgba(201,168,76,0.35)" stroke-width="1"/>
+      <line x1="1.5" y1="14" x2="6" y2="14" stroke="rgba(201,168,76,0.35)" stroke-width="1"/>
+      <line x1="22" y1="14" x2="26.5" y2="14" stroke="rgba(201,168,76,0.35)" stroke-width="1"/>
+      <line x1="5.2" y1="5.2" x2="8.2" y2="8.2" stroke="rgba(201,168,76,0.2)" stroke-width="0.75"/>
+      <line x1="19.8" y1="19.8" x2="22.8" y2="22.8" stroke="rgba(201,168,76,0.2)" stroke-width="0.75"/>
+      <line x1="22.8" y1="5.2" x2="19.8" y2="8.2" stroke="rgba(201,168,76,0.2)" stroke-width="0.75"/>
+      <line x1="8.2" y1="19.8" x2="5.2" y2="22.8" stroke="rgba(201,168,76,0.2)" stroke-width="0.75"/>
+      <polygon points="14,5.5 15.1,12.8 14,11.8 12.9,12.8" fill="#C9A84C"/>
+      <polygon points="14,22.5 15.1,15.2 14,16.2 12.9,15.2" fill="rgba(201,168,76,0.28)"/>
+      <circle cx="14" cy="14" r="1.4" fill="#C9A84C"/>
+    </svg>
+    <span class="nav-wordmark">Gold Standard</span>
+  </a>
+  <div class="nav-right">
+    <a href="https://x.com/orbgold" target="_blank" rel="noopener" class="nav-x">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+      @orbgold
+    </a>
+    <a href="#get-guide" class="nav-cta">Free guide</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-glow"></div>
+    <div class="hero-eyebrow">XAUUSD · NY Session · Opening Range Breakout</div>
+    <h1 class="hero-h1">One instrument.<br>One session.<br>A complete <em>edge.</em></h1>
+    <p class="hero-sub">The Gold Standard ORB System is a rules-based day trading approach built around a single 60-minute window on spot Gold. Every decision has a rule. Nothing is left to interpretation.</p>
+
+    <!-- LEAD MAGNET + WAITLIST BOX -->
+    <div class="offer-box" id="get-guide">
+      <div class="offer-badge">Free download · Instant delivery</div>
+      <div class="offer-title">The 4 London Profiles —<br><em>Know what kind of day it is</em> before 13:30 UTC</div>
+      <p class="offer-desc">The single most valuable pre-session skill in this system. This free visual guide teaches you to classify London's behaviour before the New York open — so you know whether you're facing a full-position day, reduced size, or stand-aside before the opening range even begins.</p>
+      <div class="offer-what">
+        <div class="offer-line">What each of the four profile types looks like and how to read them</div>
+        <div class="offer-line">How the profile changes your position size and score threshold for that session</div>
+        <div class="offer-line">The AMD narrative that makes each profile identifiable before 13:30</div>
+        <div class="offer-line">Early access to the full Gold Standard system when it launches</div>
+      </div>
+      <div class="form-row">
+        <input class="form-input" type="email" id="hero-email" placeholder="your@email.com" autocomplete="email">
+        <button class="form-btn" id="hero-btn" onclick="handleSubmit('hero')">Send it →</button>
+      </div>
+      <p class="form-note" id="hero-note">Free. No spam. One email with your guide, one email at launch — nothing else ever.</p>
+      <div class="form-success" id="hero-success">✦ &nbsp;Guide on its way. Check your inbox — and welcome to the waitlist.</div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="wrap">
+  <div class="stats-row fade-in">
+    <div class="stat"><div class="stat-val"><em>60</em></div><div class="stat-label">Minutes<br>per session</div></div>
+    <div class="stat"><div class="stat-val"><em>311</em></div><div class="stat-label">Sessions<br>backtested</div></div>
+    <div class="stat"><div class="stat-val"><em>14</em></div><div class="stat-label">Months<br>of data</div></div>
+    <div class="stat"><div class="stat-val"><em>~5</em></div><div class="stat-label">Trades<br>per month avg</div></div>
+  </div>
+</div>
+
+<!-- BODY -->
+<section style="padding: 0 0 60px;">
+  <div class="wrap">
+
+    <div class="divider fade-in"><span>The system</span></div>
+
+    <div class="fade-in">
+      <div class="section-label">What this is</div>
+      <h2 class="section-h2">Built around the <em>opening hour.</em><br>Nothing else.</h2>
+      <p class="body-text">Most day trading approaches ask you to watch screens for hours, adapt to multiple sessions, and make discretionary calls under pressure. This system does the opposite. The edge comes from one repeatable window — the first 60 minutes of the New York session on XAUUSD — and a set of filters designed to keep you out of the market on low-quality days.</p>
+      <p class="body-text">The opening range is drawn in the first 15 minutes. From 13:45 UTC, you either have a valid breakout setup or you don't. At 14:45, the session is over. Maximum two trades. The rest of the day is yours.</p>
+    </div>
+
+    <div class="grid-2 fade-in">
+      <div class="card"><div class="card-icon">⊙</div><div class="card-title">Systematic</div><div class="card-desc">Every decision follows a written rule. No grey area to misinterpret under pressure at 13:45 UTC.</div></div>
+      <div class="card"><div class="card-icon">◈</div><div class="card-title">Selective</div><div class="card-desc">Multiple layered filters mean you only trade when conditions align. Standing aside is part of the edge.</div></div>
+      <div class="card"><div class="card-icon">✦</div><div class="card-title">Asymmetric</div><div class="card-desc">Losses capped at 1R, breakeven trades cost nothing, winners run to 2.5R. Sub-50% win rate still produces positive expectancy.</div></div>
+      <div class="card"><div class="card-icon">⟳</div><div class="card-title">Repeatable</div><div class="card-desc">Same checklist, same process, every session. The edge compounds through consistent execution, not market prediction.</div></div>
+    </div>
+
+    <div class="divider fade-in"><span>The session</span></div>
+
+    <div class="fade-in">
+      <div class="section-label">How a session works</div>
+      <h2 class="section-h2">Three phases.<br><em>Twenty minutes</em> of active decisions.</h2>
+    </div>
+
+    <div class="timeline fade-in">
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-time">Before 13:30 UTC</div>
+        <div class="tl-title">Pre-session preparation</div>
+        <div class="tl-desc">Check the calendar. Classify the London profile. Identify daily levels. Confirm bias. The entire session context is established before the range begins.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-time">13:30 – 13:45 UTC</div>
+        <div class="tl-title">Opening range forms</div>
+        <div class="tl-desc">Observe only. The first 15 candles define the OR high and low. Read ATR. Run the filter stack. You have a tradeable session or you stand aside — the decision is mechanical.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-time">13:45 – 14:45 UTC</div>
+        <div class="tl-title">Trade window</div>
+        <div class="tl-desc">Wait for a qualifying breakout. Enter on retest and reclaim. Stop placed structurally. Move to breakeven at 1R. Hold to 2.5R or named liquidity level. Max two trades.</div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div class="tl-time">14:45 UTC</div>
+        <div class="tl-title">Session closes — hard stop</div>
+        <div class="tl-desc">No new entries regardless of setup quality. Log the session. The discipline of the hard close is part of what makes the system work over time.</div>
+      </div>
+    </div>
+
+    <div class="divider fade-in"><span>What you get</span></div>
+
+    <div class="fade-in">
+      <div class="section-label">Included in the system</div>
+      <h2 class="section-h2">A complete toolkit —<br>not a <em>course you read once.</em></h2>
+      <p class="body-text">Everything is designed for daily use. The dashboard guides you through every decision in sequence, logs every session, and builds your personal performance data over time. Purchase, download, and be fully set up on day one — no login, no app, no ongoing subscription.</p>
+    </div>
+
+    <div class="grid-2 fade-in">
+      <div class="included-item"><div class="inc-check">✦</div><div><div class="inc-name">Session Dashboard</div><div class="inc-desc">Daily checklist, A+ scorecard, position calculator, master log, analytics, and post-session tools in a single file.</div></div></div>
+      <div class="included-item"><div class="inc-check">✦</div><div><div class="inc-name">Strategy Guide</div><div class="inc-desc">Ten chapters covering the complete system — structure, filters, entry patterns, trade management, and psychology.</div></div></div>
+      <div class="included-item"><div class="inc-check">✦</div><div><div class="inc-name">London Profile Reference</div><div class="inc-desc">Visual guide to the four profile types — the classification that sets position size and threshold each session.</div></div></div>
+      <div class="included-item"><div class="inc-check">✦</div><div><div class="inc-name">10-Session Replay Plan</div><div class="inc-desc">Structured protocol for building the system into muscle memory before touching live capital.</div></div></div>
+      <div class="included-item"><div class="inc-check">✦</div><div><div class="inc-name">TradingView Setup Guide</div><div class="inc-desc">Every indicator, layout, and setting — step by step. Fully configured from day one.</div></div></div>
+      <div class="included-item"><div class="inc-check">✦</div><div><div class="inc-name">Instant download · Yours to keep</div><div class="inc-desc">One purchase, permanent access. No login, no app, no subscription, no ongoing obligation.</div></div></div>
+    </div>
+
+    <div class="divider fade-in"><span>The right fit</span></div>
+
+    <div class="fade-in">
+      <div class="section-label">Who this is for</div>
+      <h2 class="section-h2">Specific by design.<br><em>Not built for everyone.</em></h2>
+    </div>
+
+    <div class="for-who-card fade-in">
+      <div class="two-col">
+        <div>
+          <div class="list-label pos">This is for you if</div>
+          <ul class="check-list">
+            <li>You want a rules-based approach — not gut feel or signal dependency</li>
+            <li>You can commit one focused hour per day around 13:30 UTC</li>
+            <li>You trade or want to trade Gold (XAUUSD) specifically</li>
+            <li>You value process and data over promises and hype</li>
+            <li>You understand that a 44% win rate can be profitable when managed correctly</li>
+          </ul>
+        </div>
+        <div>
+          <div class="list-label neg">This is not for you if</div>
+          <ul class="check-list cross-list">
+            <li>You want signals or someone to tell you what to trade</li>
+            <li>You need to cover multiple sessions or instruments</li>
+            <li>You're looking for guaranteed returns or a shortcut</li>
+            <li>You have no prior experience of financial markets</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="divider fade-in"><span>Follow along</span></div>
+
+    <a href="https://x.com/orbgold" target="_blank" rel="noopener" class="x-strip fade-in">
+      <div class="x-strip-left">
+        <div class="x-avatar">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.744l7.737-8.835L1.254 2.25H8.08l4.253 5.622 5.911-5.622zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+        </div>
+        <div>
+          <div class="x-handle">@orbgold</div>
+          <div class="x-desc">Session observations, chart notes, and system process — posted from replay sessions onward</div>
+        </div>
+      </div>
+      <div class="x-follow-btn">Follow on X ↗</div>
+    </a>
+
+  </div>
+</section>
+
+<!-- BOTTOM CTA -->
+<section>
+  <div class="wrap">
+    <div class="bottom-cta fade-in">
+      <h2>Get the free guide.<br><em>Join the waitlist.</em></h2>
+      <p>Download the 4 London Profiles guide now and get one email when the full system launches. Nothing in between.</p>
+      <div class="bottom-form">
+        <div class="form-row">
+          <input class="form-input" type="email" id="bottom-email" placeholder="your@email.com" autocomplete="email">
+          <button class="form-btn" id="bottom-btn" onclick="handleSubmit('bottom')">Send it →</button>
+        </div>
+        <p class="form-note" id="bottom-note">Free guide delivered immediately. One launch email. Nothing else.</p>
+        <div class="form-success" id="bottom-success">✦ &nbsp;Guide on its way. Check your inbox — and welcome to the waitlist.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <a href="#" class="footer-logo">
+      <svg width="18" height="18" viewBox="0 0 28 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <circle cx="14" cy="14" r="13" stroke="rgba(201,168,76,0.2)" stroke-width="0.5"/>
+        <line x1="14" y1="1.5" x2="14" y2="6" stroke="rgba(201,168,76,0.45)" stroke-width="1.2"/>
+        <polygon points="14,5.5 15.1,12.8 14,11.8 12.9,12.8" fill="rgba(201,168,76,0.5)"/>
+        <circle cx="14" cy="14" r="1.3" fill="rgba(201,168,76,0.4)"/>
+      </svg>
+      <span style="font-family:'Instrument Serif',serif;font-size:12px;color:var(--text3)">Gold Standard</span>
+    </a>
+    <div class="footer-links">
+      <a href="https://x.com/orbgold" target="_blank" rel="noopener">@orbgold on X</a>
+      <a href="#get-guide">Free guide</a>
+    </div>
+    <p class="footer-disclaimer">Not financial advice. Trading CFDs and spot Gold involves significant risk of loss and is not suitable for all investors. Past backtested performance does not guarantee future results. Backtested results are for educational purposes only and are not indicative of future performance. Never risk capital you cannot afford to lose.</p>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08, rootMargin: '0px 0px -32px 0px' });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Nav CTA smooth scroll
+  document.querySelectorAll('a[href="#get-guide"]').forEach(a => {
+    a.addEventListener('click', e => {
+      e.preventDefault();
+      document.getElementById('get-guide').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      setTimeout(() => document.getElementById('hero-email').focus(), 500);
+    });
+  });
+
+  // Form handler
+  // ── TO WIRE UP: replace the setTimeout block with your email service fetch call ──
+  // Mailchimp example:
+  //   fetch('https://YOUR_ACCOUNT.us1.list-manage.com/subscribe/post-json?u=XXXX&id=XXXX&EMAIL=' + encodeURIComponent(email), { method: 'POST' })
+  // ConvertKit example:
+  //   fetch('https://app.convertkit.com/forms/XXXXXXX/subscriptions', { method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify({ email_address: email }) })
+  function handleSubmit(id) {
+    const emailEl = document.getElementById(id + '-email');
+    const btn     = document.getElementById(id + '-btn');
+    const note    = document.getElementById(id + '-note');
+    const success = document.getElementById(id + '-success');
+    const email   = emailEl.value.trim();
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      emailEl.style.borderColor = 'var(--red)';
+      emailEl.focus();
+      setTimeout(() => emailEl.style.borderColor = '', 1800);
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'Sending…';
+
+    // Replace this block with real fetch once email service is connected
+    setTimeout(() => {
+      emailEl.closest('.form-row').style.display = 'none';
+      note.style.display = 'none';
+      success.style.display = 'block';
+    }, 700);
+  }
+
+  // Enter key support
+  document.querySelectorAll('.form-input').forEach(input => {
+    input.addEventListener('keydown', e => {
+      if (e.key === 'Enter') handleSubmit(input.id.replace('-email', ''));
+    });
+  });
+</script>
+</body>
+</html>
