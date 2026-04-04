@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What the ATR Filter Actually Does — Gold Standard ORB</title>
+<meta name="description" content="Most ORB traders ignore the ATR filter entirely. Here's what it actually does, why it matters, and how a simple range check eliminates the sessions most likely to end in a loss.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C9A84C;--gl:#E8D5A3;--gb:#F0E0A0;--gd:#7A6430;
+  --bg:#08080A;--bg2:#0F0F12;--bg3:#161619;--bg4:#1E1E22;
+  --t:#F4F0EA;--t2:#C8C2B8;--t3:#7A756E;--t4:#3E3B36;
+  --bdr:rgba(201,168,76,0.12);--bdm:rgba(201,168,76,0.25);--bds:rgba(201,168,76,0.42);
+  --green:#5DBF8A;--red:#E06060;--amber:#E8A84C;
+  --df:'Cormorant Garamond',serif;--mono:'DM Mono',monospace;--body:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--t);font-family:var(--body);line-height:1.7;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,40px);background:rgba(8,8,10,0.92);backdrop-filter:blur(20px);border-bottom:.5px solid var(--bdr)}
+.nbrand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nwm{font-family:var(--df);font-size:17px;font-weight:300;letter-spacing:.04em;color:var(--gl);line-height:1}
+.nwm em{font-style:italic;color:var(--gold)}
+.nr{display:flex;align-items:center;gap:8px}
+.nl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);text-decoration:none;padding:6px 10px;transition:color .2s}
+.nl:hover{color:var(--t2)}
+.nb{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,0.1);border:.5px solid var(--bds);padding:9px 18px;border-radius:3px;text-decoration:none;white-space:nowrap;transition:background .2s}
+.nb:hover{background:rgba(201,168,76,0.2)}
+
+/* ARTICLE LAYOUT */
+.art-wrap{max-width:680px;margin:0 auto;padding:120px clamp(20px,5vw,40px) 100px}
+
+.art-eyebrow{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gd);display:flex;align-items:center;gap:12px;margin-bottom:24px}
+.art-eyebrow::before{content:'';width:24px;height:.5px;background:var(--gd)}
+
+.art-h1{font-family:var(--df);font-size:clamp(38px,7vw,64px);font-weight:300;line-height:1.04;letter-spacing:-.02em;margin-bottom:28px;color:var(--t)}
+.art-h1 em{font-style:italic;color:var(--gold)}
+
+.art-meta{display:flex;align-items:center;gap:20px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);margin-bottom:48px;flex-wrap:wrap}
+.art-meta span{display:flex;align-items:center;gap:8px}
+.mdot{width:3px;height:3px;border-radius:50%;background:var(--t4)}
+
+.hrgold{height:.5px;background:linear-gradient(90deg,transparent,var(--bdm),transparent);margin:48px 0}
+
+.art-body p{font-size:clamp(15px,3vw,17px);color:var(--t2);line-height:1.85;margin-bottom:24px}
+.art-body p strong{color:var(--t)}
+.art-body p a{color:var(--gold);text-decoration:none;border-bottom:.5px solid var(--bdm);transition:border-color .2s}
+.art-body p a:hover{border-color:var(--gold)}
+
+.art-h2{font-family:var(--df);font-size:clamp(26px,4.5vw,38px);font-weight:300;font-style:italic;color:var(--gl);line-height:1.15;margin:52px 0 20px}
+
+.art-h3{font-family:var(--mono);font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin:36px 0 14px}
+
+/* CALLOUT BOX */
+.callout{background:var(--bg2);border:.5px solid var(--bdm);border-radius:8px;padding:28px 32px;margin:36px 0}
+.callout-label{font-family:var(--mono);font-size:9px;letter-spacing:.2em;text-transform:uppercase;color:var(--gd);margin-bottom:12px}
+.callout p{font-size:14px;color:var(--t2);line-height:1.75;margin:0}
+.callout p strong{color:var(--t)}
+.callout p + p{margin-top:12px}
+
+/* RULE BLOCK — visual diagram */
+.rule-band{display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;border:.5px solid var(--bdr);border-radius:8px;overflow:hidden;margin:36px 0}
+.rb{padding:24px 20px;background:var(--bg2);text-align:center}
+.rb.rb-bad{background:rgba(224,96,96,0.06);border-top:2px solid var(--red)}
+.rb.rb-ok{background:rgba(93,191,138,0.06);border-top:2px solid var(--green)}
+.rb.rb-warn{background:rgba(232,168,76,0.06);border-top:2px solid var(--amber)}
+.rb-val{font-family:var(--df);font-size:clamp(24px,5vw,38px);font-weight:300;font-style:italic;line-height:1;margin-bottom:8px}
+.rb-bad .rb-val{color:var(--red)}
+.rb-ok .rb-val{color:var(--green)}
+.rb-warn .rb-val{color:var(--amber)}
+.rb-label{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--t3);line-height:1.4}
+.rb-desc{font-size:12px;color:var(--t3);margin-top:10px;line-height:1.5}
+
+/* FORMULA BLOCK */
+.formula{background:var(--bg3);border:.5px solid var(--bdr);border-radius:8px;padding:24px 28px;margin:28px 0;font-family:var(--mono);font-size:13px;color:var(--t2);line-height:1.7}
+.formula .f-label{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--gd);margin-bottom:12px}
+.formula .f-line{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+.formula .f-line + .f-line{margin-top:6px;padding-top:6px;border-top:.5px solid var(--bdr)}
+.formula .f-key{color:var(--t3)}
+.formula .f-val{color:var(--gl)}
+
+/* TWO-COL TABLE */
+.two-col{display:grid;grid-template-columns:1fr 1fr;gap:2px;margin:28px 0}
+.tc-cell{background:var(--bg2);padding:20px 22px}
+.tc-cell:nth-child(1),.tc-cell:nth-child(2){background:var(--bg3)}
+.tc-label{font-family:var(--mono);font-size:9px;letter-spacing:.15em;text-transform:uppercase;color:var(--gd);margin-bottom:8px}
+.tc-text{font-size:13px;color:var(--t2);line-height:1.6}
+.tc-text strong{color:var(--t)}
+
+/* STEP LIST */
+.step-list{list-style:none;margin:28px 0;display:flex;flex-direction:column;gap:2px}
+.step-item{display:grid;grid-template-columns:40px 1fr;gap:16px;align-items:start;background:var(--bg2);padding:20px 22px;border-radius:4px}
+.step-n{font-family:var(--df);font-size:28px;font-weight:300;font-style:italic;color:var(--gd);line-height:1}
+.step-text{font-size:14px;color:var(--t2);line-height:1.65}
+.step-text strong{color:var(--t);display:block;margin-bottom:4px;font-size:13px;font-family:var(--mono);letter-spacing:.05em}
+
+/* CTA */
+.cta-block{background:var(--bg2);border:.5px solid var(--bdm);border-radius:12px;padding:40px 36px;margin:60px 0 0;text-align:center}
+.cta-label{font-family:var(--mono);font-size:9px;letter-spacing:.22em;text-transform:uppercase;color:var(--gd);margin-bottom:16px}
+.cta-h{font-family:var(--df);font-size:clamp(26px,5vw,40px);font-weight:300;font-style:italic;color:var(--gl);margin-bottom:12px}
+.cta-p{font-size:14px;color:var(--t3);margin-bottom:28px;line-height:1.6}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:15px 28px;background:var(--gold);color:#08080A;border-radius:3px;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .2s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 12px 36px rgba(201,168,76,0.3)}
+
+/* BACK LINK */
+.back-link{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--t3);text-decoration:none;margin-bottom:40px;transition:color .2s}
+.back-link:hover{color:var(--gold)}
+.back-link::before{content:'←';font-size:12px}
+
+/* FOOTER */
+footer{border-top:.5px solid var(--bdr);padding:40px clamp(20px,5vw,60px);text-align:center}
+.f-disc{font-size:11px;color:var(--t4);line-height:1.7;max-width:560px;margin:0 auto 16px}
+.f-copy{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--t4)}
+
+@media(max-width:600px){
+  .rule-band{grid-template-columns:1fr}
+  .two-col{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="/" class="nbrand">
+    <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 2L22.5 17.5L20 20L17.5 17.5Z" fill="#C9A84C" opacity="0.9"/>
+      <path d="M38 20L22.5 22.5L20 20L22.5 17.5Z" fill="#C9A84C" opacity="0.6"/>
+      <path d="M20 38L17.5 22.5L20 20L22.5 22.5Z" fill="#C9A84C" opacity="0.75"/>
+      <path d="M2 20L17.5 17.5L20 20L17.5 22.5Z" fill="#C9A84C" opacity="0.5"/>
+      <path d="M20 2L21.8 14.5L26 6L21.8 17.5Z" fill="#8B6914" opacity="0.4"/>
+      <path d="M38 20L25.5 21.8L34 26L22.5 21.8Z" fill="#8B6914" opacity="0.3"/>
+      <path d="M20 38L18.2 25.5L14 34L18.2 22.5Z" fill="#8B6914" opacity="0.35"/>
+      <path d="M2 20L14.5 18.2L6 14L14.5 21.8Z" fill="#8B6914" opacity="0.25"/>
+      <circle cx="20" cy="20" r="3" fill="#C9A84C" opacity="0.8"/>
+    </svg>
+    <span class="nwm">Gold Standard <em>ORB</em></span>
+  </a>
+  <div class="nr">
+    <a href="/blog/" class="nl">Articles</a>
+    <a href="/#get-guide" class="nb">Free Guide</a>
+  </div>
+</nav>
+
+<div class="art-wrap">
+
+  <a href="/blog/" class="back-link">All articles</a>
+
+  <div class="art-eyebrow">Strategy · Technical Analysis</div>
+
+  <h1 class="art-h1">What the ATR Filter <em>Actually Does</em> — And Why Most ORB Traders Skip It</h1>
+
+  <div class="art-meta">
+    <span>8 min read</span>
+    <span class="mdot"></span>
+    <span>ATR · Opening Range · Risk</span>
+  </div>
+
+  <div class="hrgold"></div>
+
+  <div class="art-body">
+
+    <p>Most traders who use an Opening Range Breakout strategy stop at the basics: wait for price to break outside the range, enter in the breakout direction, set a stop, and target a reward. That is the framework. And it works — but not on every day.</p>
+
+    <p>The part most people skip is asking a simple question before the entry: <strong>is this opening range a meaningful one?</strong></p>
+
+    <p>That question is what the ATR filter answers. It is one of the quietest quality gates in rules-based trading, and skipping it is one of the most common reasons ORB traders experience sessions that feel completely different from the setups they practised on.</p>
+
+    <h2>What ATR actually measures</h2>
+
+    <p>ATR stands for Average True Range. Despite sounding technical, the concept is straightforward: it measures the average size of price movement over a set number of recent candles — including any gaps between sessions.</p>
+
+    <p>Think of it as a barometer for how active a market is right now. A higher ATR means price has been moving larger distances per candle. A lower ATR means price has been moving smaller distances. It is not predicting direction — it is measuring volatility.</p>
+
+    <div class="callout">
+      <div class="callout-label">Plain English</div>
+      <p>If the average candle on Gold over the last 14 periods has moved $12, the ATR is 12. If recent candles have been quieter and averaging $6 moves, the ATR is 6. The system uses a 14-period RMA (a smoothed average) read from the M1 chart at exactly 13:45 UTC, when the Opening Range closes.</p>
+    </div>
+
+    <h2>What the Opening Range is — and why its size matters</h2>
+
+    <p>The Opening Range (OR) is the high and low formed during the first 15 minutes of the New York session, from 13:30 to 13:45 UTC. Those two levels become the boundaries for the trade.</p>
+
+    <p>A breakout above the OR high is a long signal. A break below the OR low is a short signal. The stop sits at the opposite boundary. That means the OR width is also your risk — 1R.</p>
+
+    <p>This is why the size of the OR matters. <strong>If the OR is unusually small, the trade has almost no room to breathe</strong> before hitting the stop. If it's unusually large, you're risking a much bigger amount than normal — and often because something abnormal happened in those 15 minutes, like a news spike or a flash move.</p>
+
+    <p>Neither extreme produces reliable trades. The ATR filter screens them both out.</p>
+
+    <h2>How the filter works</h2>
+
+    <p>At 13:45 UTC, once the OR is complete, you check one thing: is the OR width between 0.5× and 8.0× the current ATR?</p>
+
+    <div class="formula">
+      <div class="f-label">The check — two boundaries</div>
+      <div class="f-line">
+        <span class="f-key">Lower bound (too tight):</span>
+        <span class="f-val">OR width ≥ 0.5 × ATR</span>
+      </div>
+      <div class="f-line">
+        <span class="f-key">Upper bound (too wide):</span>
+        <span class="f-val">OR width ≤ 8.0 × ATR</span>
+      </div>
+      <div class="f-line">
+        <span class="f-key">Result:</span>
+        <span class="f-val">Both must pass. One failure = no trade.</span>
+      </div>
+    </div>
+
+    <div class="rule-band">
+      <div class="rb rb-bad">
+        <div class="rb-val">&lt; 0.5×</div>
+        <div class="rb-label">Too tight</div>
+        <div class="rb-desc">Range too small — no meaningful boundary to trade</div>
+      </div>
+      <div class="rb rb-ok">
+        <div class="rb-val">0.5–8.0×</div>
+        <div class="rb-label">Valid range</div>
+        <div class="rb-desc">Normal volatility — breakout has structural meaning</div>
+      </div>
+      <div class="rb rb-warn">
+        <div class="rb-val">&gt; 8.0×</div>
+        <div class="rb-label">Too wide</div>
+        <div class="rb-desc">Abnormal session — likely news spike or extreme event</div>
+      </div>
+    </div>
+
+    <h2>Why "too tight" is a problem</h2>
+
+    <p>When the OR is very small — less than half the typical M1 candle movement — a breakout above or below it is essentially meaningless. Price drifts outside that boundary constantly as part of normal market noise.</p>
+
+    <p>You're not breaking out of a range. You're just getting a wiggle. The trade has no structural foundation, and your stop is so close to your entry that a single tick of noise can stop you out before any real move develops.</p>
+
+    <p>The lower bound filters these sessions cleanly. If the market didn't build a proper 15-minute range, there is nothing meaningful to break out of.</p>
+
+    <h2>Why "too wide" is equally dangerous</h2>
+
+    <p>The upper bound catches the opposite problem: an OR that is far larger than normal.</p>
+
+    <p>When Gold forms an unusually large 15-minute range, it is usually because something specific happened — a high-impact economic release, an unexpected news event, or a sharp liquidity move. These sessions look dramatic. They can look like incredible opportunities.</p>
+
+    <p>They aren't. The volatility in those sessions is reactive and unpredictable. The stop distance (the OR width) is enormous, meaning your risk per trade has ballooned well beyond what the system is designed around. The edge disappears.</p>
+
+    <div class="callout">
+      <div class="callout-label">A note on the upper bound</div>
+      <p>The upper limit is 8.0× — not a tighter number. This is deliberate. At current Gold prices in the $3,000–$5,000 range, a normal 15-minute OR routinely spans 3–6 times a single M1 candle ATR. Tighter upper limits (like 3.0×) were calibrated when Gold was trading near $2,000. Using them today would incorrectly reject the majority of perfectly valid sessions.</p>
+      <p><strong>The filter is designed to catch genuine extremes — not to restrict normal, healthy volatility.</strong></p>
+    </div>
+
+    <h2>The two types of sessions this eliminates</h2>
+
+    <div class="two-col">
+      <div class="tc-cell">
+        <div class="tc-label">Compressed sessions</div>
+        <div class="tc-text"><strong>What they look like:</strong> Price barely moves in the first 15 minutes. The OR is a tiny band. The candles inside it are small and directionless.<br><br>The breakout, if it comes, is often a false one. There was no range worth breaking.</div>
+      </div>
+      <div class="tc-cell">
+        <div class="tc-label">Explosion sessions</div>
+        <div class="tc-text"><strong>What they look like:</strong> A major data release or news event fires in the 13:30–13:45 window. Price shoots 40+ points in one direction, forming a massive OR.<br><br>Your stop is 40+ points. Your risk has multiplied. The trade is uncontrolled.</div>
+      </div>
+      <div class="tc-cell" style="background:var(--bg3)">
+        <div class="tc-label">Result</div>
+        <div class="tc-text">No structural edge. Frequent stop-outs from normal noise before any real move has space to develop.</div>
+      </div>
+      <div class="tc-cell" style="background:var(--bg3)">
+        <div class="tc-label">Result</div>
+        <div class="tc-text">No position sizing consistency. The system's R-based risk model breaks down when the OR width is 5× its normal size.</div>
+      </div>
+    </div>
+
+    <h2>How to read it in practice</h2>
+
+    <p>At 13:45 UTC — not before, not after — you note the ATR reading and the OR width, then run the check.</p>
+
+    <ol class="step-list" style="list-style:none">
+      <li class="step-item">
+        <span class="step-n">1</span>
+        <span class="step-text"><strong>Note the ATR from your M1 chart</strong>Read the ATR (14, RMA) indicator at 13:45 UTC exactly. This is your baseline — a number representing average recent candle movement.</span>
+      </li>
+      <li class="step-item">
+        <span class="step-n">2</span>
+        <span class="step-text"><strong>Calculate the OR width</strong>OR High minus OR Low. Simple subtraction.</span>
+      </li>
+      <li class="step-item">
+        <span class="step-n">3</span>
+        <span class="step-text"><strong>Check the lower bound</strong>Is OR width ≥ 0.5 × ATR? If no — no trade. If yes — continue.</span>
+      </li>
+      <li class="step-item">
+        <span class="step-n">4</span>
+        <span class="step-text"><strong>Check the upper bound</strong>Is OR width ≤ 8.0 × ATR? If no — no trade. If yes — the ATR filter passes. Proceed to the rest of the checklist.</span>
+      </li>
+    </ol>
+
+    <p>This takes about 15 seconds. It happens at the exact moment the OR closes. It is not a gut feel check — the numbers either pass or they don't.</p>
+
+    <h2>What this filter is not</h2>
+
+    <p>The ATR filter does not predict direction. It does not tell you whether the breakout will succeed. It does not replace the bias filters, the A+ scorecard, or the London profile classification. It is a single gate at a specific point in the session workflow — checking that the structural conditions for a valid trade exist before anything else happens.</p>
+
+    <p>If the OR doesn't pass this gate, none of the other analysis matters. You log the session as a no-trade, note the ATR reading, and move on. That is a legitimate outcome. Knowing when not to trade is exactly as valuable as knowing when to trade.</p>
+
+    <h2>The broader principle</h2>
+
+    <p>Every professional trading system has filters that screen out sessions where the edge doesn't apply. This is one of them. The ATR filter exists because the Opening Range Breakout works in certain conditions — and not in others.</p>
+
+    <p>Compressed ORs produce noise-stopped entries. Extreme ORs produce mis-sized risk. Neither is the market environment the system is built for. The filter keeps you trading only the sessions where the conditions actually match what has been tested.</p>
+
+    <p>That is what separates a rules-based system from guessing. Not every trade taken — but every trade taken only when the rules say it is valid.</p>
+
+  </div>
+
+  <div class="hrgold"></div>
+
+  <div class="cta-block">
+    <div class="cta-label">Free Resource</div>
+    <div class="cta-h">The 4 London Profiles — Free Guide</div>
+    <p class="cta-p">Learn how to classify London's behaviour before the NY session opens — the foundational filter that determines whether a session is worth trading at all.</p>
+    <a href="/#get-guide" class="cta-btn">Download Free Guide →</a>
+  </div>
+
+</div>
+
+<footer>
+  <p class="f-disc">Not financial advice. Trading CFDs and spot Gold involves significant risk of loss. Past performance does not guarantee future results. This article is for educational purposes only.</p>
+  <p class="f-copy">© 2026 Gold Standard ORB · <a href="/" style="color:inherit;text-decoration:none">goldstandardorb.com</a></p>
+</footer>
+
+</body>
+</html>
