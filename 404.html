@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — Gold Standard ORB</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#C9A84C;--gl:#E8D5A3;--gd:#7A6430;--bg:#08080A;--bg2:#0F0F12;--t:#F4F0EA;--t2:#C8C2B8;--t3:#7A756E;--t4:#3E3B36;--bdr:rgba(201,168,76,0.12);--bdm:rgba(201,168,76,0.25);--bds:rgba(201,168,76,0.42);--df:'Cormorant Garamond',serif;--mono:'DM Mono',monospace;--body:'DM Sans',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{background:var(--bg);color:var(--t);font-family:var(--body);-webkit-font-smoothing:antialiased;display:flex;flex-direction:column}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,40px);background:rgba(8,8,10,0.92);backdrop-filter:blur(20px);border-bottom:.5px solid var(--bdr)}
+.nbrand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nwm{font-family:var(--df);font-size:17px;font-weight:300;letter-spacing:.04em;color:var(--gl)}
+.nwm em{font-style:italic;color:var(--gold)}
+
+.main{flex:1;display:flex;align-items:center;justify-content:center;padding:80px clamp(20px,5vw,60px) 60px;text-align:center}
+.inner{max-width:480px}
+
+.code{font-family:var(--df);font-size:clamp(100px,22vw,180px);font-weight:300;font-style:italic;color:var(--gd);line-height:1;margin-bottom:0;opacity:0.5;letter-spacing:-.04em;display:block}
+
+.compass{margin:0 auto 32px;width:72px;height:72px;opacity:0.7}
+
+.h1{font-family:var(--df);font-size:clamp(28px,5vw,42px);font-weight:300;line-height:1.1;margin-bottom:16px}
+.h1 em{font-style:italic;color:var(--gold)}
+
+.sub{font-size:15px;color:var(--t3);line-height:1.7;margin-bottom:40px}
+
+.links{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.btn-primary{display:inline-flex;align-items:center;gap:8px;padding:14px 24px;background:var(--gold);color:#08080A;border-radius:3px;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .2s}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 10px 30px rgba(201,168,76,0.3)}
+.btn-ghost{display:inline-flex;align-items:center;gap:8px;padding:13px 20px;border:.5px solid var(--bdm);color:var(--t3);border-radius:3px;font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .2s}
+.btn-ghost:hover{border-color:var(--bds);color:var(--t)}
+
+footer{border-top:.5px solid var(--bdr);padding:20px clamp(20px,5vw,40px);text-align:center}
+.fcopy{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;color:var(--t4)}
+</style>
+</head>
+<body>
+<nav>
+  <a href="/" class="nbrand">
+    <svg width="22" height="22" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M20 2L22.5 17.5L20 20L17.5 17.5Z" fill="#C9A84C" opacity="0.9"/>
+      <path d="M38 20L22.5 22.5L20 20L22.5 17.5Z" fill="#C9A84C" opacity="0.6"/>
+      <path d="M20 38L17.5 22.5L20 20L22.5 22.5Z" fill="#C9A84C" opacity="0.75"/>
+      <path d="M2 20L17.5 17.5L20 20L17.5 22.5Z" fill="#C9A84C" opacity="0.5"/>
+      <circle cx="20" cy="20" r="3" fill="#C9A84C" opacity="0.8"/>
+    </svg>
+    <span class="nwm">Gold Standard <em>ORB</em></span>
+  </a>
+</nav>
+
+<div class="main">
+  <div class="inner">
+
+    <svg class="compass" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M40 4L45 35L40 40L35 35Z" fill="#C9A84C" opacity="0.9"/>
+      <path d="M76 40L45 45L40 40L45 35Z" fill="#C9A84C" opacity="0.55"/>
+      <path d="M40 76L35 45L40 40L45 45Z" fill="#C9A84C" opacity="0.7"/>
+      <path d="M4 40L35 35L40 40L35 45Z" fill="#C9A84C" opacity="0.4"/>
+      <path d="M40 4L43.5 29L52 12L43.5 35Z" fill="#7A6430" opacity="0.45"/>
+      <path d="M76 40L51 43.5L68 52L45 43.5Z" fill="#7A6430" opacity="0.3"/>
+      <path d="M40 76L36.5 51L28 68L36.5 45Z" fill="#7A6430" opacity="0.35"/>
+      <path d="M4 40L29 36.5L12 28L29 43.5Z" fill="#7A6430" opacity="0.25"/>
+      <circle cx="40" cy="40" r="5" fill="#C9A84C" opacity="0.7"/>
+      <circle cx="40" cy="40" r="2" fill="#E8D5A3" opacity="0.9"/>
+    </svg>
+
+    <span class="code">404</span>
+
+    <h1 class="h1">Outside the <em>opening range</em></h1>
+    <p class="sub">This page doesn't exist — or the link that brought you here is broken. Head back to familiar territory.</p>
+
+    <div class="links">
+      <a href="/" class="btn-primary">← Back to Home</a>
+      <a href="/blog/" class="btn-ghost">Browse Articles</a>
+    </div>
+
+  </div>
+</div>
+
+<footer>
+  <p class="fcopy">© 2026 Gold Standard ORB</p>
+</footer>
+</body>
+</html>
