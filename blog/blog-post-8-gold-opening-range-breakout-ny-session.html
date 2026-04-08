@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gold Opening Range Breakout: A Complete Framework for the NY Session | Gold Standard ORB</title>
+<meta name="description" content="The NY opening range breakout on Gold is the highest-probability 60-minute window in the XAUUSD trading day. Here is the complete framework — from range formation to entry to exit.">
+<meta name="keywords" content="gold opening range breakout, XAUUSD ORB strategy, NY session gold trading, opening range breakout XAUUSD, gold breakout strategy, NY open gold trading system">
+<meta property="og:title" content="Gold Opening Range Breakout: A Complete Framework for the NY Session">
+<meta property="og:description" content="The NY opening range breakout on Gold is the highest-probability window in the intraday trading day. Here is the complete framework — from range formation to entry to exit.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://goldstandardorb.com/blog/blog-post-8-gold-opening-range-breakout-ny-session.html">
+<link rel="canonical" href="https://goldstandardorb.com/blog/blog-post-8-gold-opening-range-breakout-ny-session.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C9A84C;--gl:#E8D5A3;--gd:#7A6430;
+  --bg:#08080A;--bg2:#0F0F12;--bg3:#161619;--bg4:#1E1E22;
+  --t:#F4F0EA;--t2:#C8C2B8;--t3:#7A756E;--t4:#3E3B36;
+  --bdr:rgba(201,168,76,0.12);--bdm:rgba(201,168,76,0.25);--bds:rgba(201,168,76,0.42);
+  --green:#5DBF8A;--red:#E06060;--amber:#E8A84C;
+  --df:'Cormorant Garamond',serif;--mono:'DM Mono',monospace;--body:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--t);font-family:var(--body);line-height:1.7;-webkit-font-smoothing:antialiased}
+
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,40px);background:rgba(8,8,10,0.92);backdrop-filter:blur(20px);border-bottom:.5px solid var(--bdr)}
+.nbrand{display:flex;align-items:center;gap:10px;text-decoration:none}
+.nwm{font-family:var(--df);font-size:17px;font-weight:300;letter-spacing:.04em;color:var(--gl);line-height:1}
+.nwm em{font-style:italic;color:var(--gold)}
+.nr{display:flex;align-items:center;gap:8px}
+.nl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);text-decoration:none;padding:6px 10px;transition:color .2s}
+.nl:hover{color:var(--t2)}
+.nb{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,0.1);border:.5px solid var(--bds);padding:9px 18px;border-radius:3px;text-decoration:none;transition:background .2s}
+.nb:hover{background:rgba(201,168,76,0.2)}
+
+.article-wrap{max-width:680px;margin:0 auto;padding:120px clamp(20px,5vw,40px) 100px}
+
+.art-eyebrow{display:flex;align-items:center;gap:16px;margin-bottom:28px}
+.art-tag{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gd)}
+.art-sep{width:32px;height:.5px;background:var(--bdr)}
+.art-date{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--t3)}
+
+h1{font-family:var(--df);font-size:clamp(38px,7vw,58px);font-weight:300;line-height:1.08;letter-spacing:-.02em;color:var(--t);margin-bottom:24px}
+h1 em{font-style:italic;color:var(--gold)}
+
+.art-sub{font-size:18px;color:var(--t2);line-height:1.7;margin-bottom:48px;border-left:2px solid var(--gold);padding-left:20px}
+
+.art-meta{display:flex;gap:24px;padding-bottom:40px;margin-bottom:48px;border-bottom:.5px solid var(--bdr)}
+.art-meta-item{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--t3);display:flex;align-items:center;gap:6px}
+.art-meta-item span{color:var(--t2)}
+
+h2{font-family:var(--df);font-size:clamp(24px,4vw,30px);font-weight:300;font-style:italic;color:var(--gl);margin:52px 0 20px;line-height:1.2}
+h3{font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin:36px 0 14px}
+
+p{color:var(--t2);font-size:16px;line-height:1.78;margin-bottom:22px}
+p strong{color:var(--t);font-weight:500}
+
+.callout{background:var(--bg3);border:.5px solid var(--bdm);border-radius:8px;padding:24px 28px;margin:36px 0}
+.callout-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.callout p{margin-bottom:0;font-size:15px}
+
+.toc{background:var(--bg2);border:.5px solid var(--bdr);border-radius:8px;padding:28px 32px;margin:40px 0}
+.toc-label{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:16px}
+.toc ol{list-style:none;counter-reset:toc-counter;padding:0}
+.toc li{counter-increment:toc-counter;padding:8px 0;border-bottom:.5px solid var(--bdr);display:flex;align-items:baseline;gap:12px}
+.toc li:last-child{border-bottom:none}
+.toc li::before{content:counter(toc-counter,decimal-leading-zero);font-family:var(--mono);font-size:10px;color:var(--gd);flex-shrink:0}
+.toc a{font-size:14px;color:var(--t2);text-decoration:none;transition:color .2s}
+.toc a:hover{color:var(--gold)}
+
+.timeline{position:relative;margin:36px 0}
+.timeline::before{content:'';position:absolute;left:22px;top:0;bottom:0;width:.5px;background:var(--bdr)}
+.tl-item{display:flex;gap:20px;padding:0 0 32px}
+.tl-item:last-child{padding-bottom:0}
+.tl-dot{width:44px;height:44px;background:var(--bg3);border:.5px solid var(--bdm);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;position:relative;z-index:1}
+.tl-dot-inner{width:8px;height:8px;background:var(--gold);border-radius:50%}
+.tl-content{padding-top:10px}
+.tl-time{font-family:var(--mono);font-size:10px;letter-spacing:.14em;color:var(--gold);margin-bottom:6px}
+.tl-title{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--t);margin-bottom:8px}
+.tl-body{font-size:14px;color:var(--t2);line-height:1.65}
+
+.criteria-list{margin:24px 0;display:flex;flex-direction:column;gap:0}
+.criterion{display:flex;gap:16px;align-items:start;padding:16px 0;border-bottom:.5px solid var(--bdr)}
+.criterion:first-child{border-top:.5px solid var(--bdr)}
+.crit-num{font-family:var(--mono);font-size:10px;color:var(--gd);flex-shrink:0;padding-top:2px;width:24px}
+.crit-body h4{font-family:var(--mono);font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:var(--t);margin-bottom:4px}
+.crit-body p{font-size:14px;color:var(--t3);margin:0;line-height:1.55}
+.hard-gate{background:rgba(201,168,76,0.08);border-left:2px solid var(--gold);padding-left:12px;border-radius:0 4px 4px 0}
+.hard-gate .crit-body h4::after{content:' — HARD GATE';color:var(--gold);font-size:9px}
+
+.levels-table{width:100%;border-collapse:collapse;margin:24px 0;font-size:14px}
+.levels-table th{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);text-align:left;padding:10px 14px;border-bottom:.5px solid var(--bdm);background:var(--bg2)}
+.levels-table td{padding:12px 14px;border-bottom:.5px solid var(--bdr);color:var(--t2);vertical-align:top}
+.levels-table tr:last-child td{border-bottom:none}
+.levels-table .tag{display:inline-flex;font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;padding:2px 7px;border-radius:2px}
+.tag-long{background:rgba(93,191,138,0.12);border:.5px solid rgba(93,191,138,0.3);color:var(--green)}
+.tag-short{background:rgba(224,96,96,0.12);border:.5px solid rgba(224,96,96,0.3);color:var(--red)}
+.tag-both{background:rgba(201,168,76,0.1);border:.5px solid rgba(201,168,76,0.3);color:var(--gold)}
+
+.rule-block{background:var(--bg3);border:.5px solid var(--bdr);border-radius:8px;padding:20px 24px;margin:14px 0}
+.rule-label{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--t3);margin-bottom:8px}
+.rule-block p{font-size:14px;color:var(--t);margin:0;line-height:1.6;font-family:var(--mono)}
+
+.skip-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:24px 0}
+.skip-card{background:rgba(224,96,96,0.05);border:.5px solid rgba(224,96,96,0.15);border-radius:8px;padding:16px 18px}
+.skip-card h4{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--red);margin-bottom:6px}
+.skip-card p{font-size:13px;color:var(--t3);margin:0;line-height:1.5}
+
+.pull-quote{font-family:var(--df);font-size:clamp(22px,4vw,28px);font-style:italic;color:var(--gl);line-height:1.35;border-left:2px solid var(--gold);padding:8px 0 8px 24px;margin:44px 0}
+
+.cta-block{background:linear-gradient(135deg,rgba(201,168,76,0.06),rgba(201,168,76,0.02));border:.5px solid var(--bdm);border-radius:12px;padding:40px;margin:56px 0;text-align:center}
+.cta-label{font-family:var(--mono);font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--gd);margin-bottom:16px}
+.cta-h{font-family:var(--df);font-size:28px;font-weight:300;color:var(--gl);margin-bottom:12px}
+.cta-h em{font-style:italic;color:var(--gold)}
+.cta-p{font-size:15px;color:var(--t3);margin-bottom:28px;max-width:440px;margin-left:auto;margin-right:auto}
+.cta-btn{display:inline-flex;align-items:center;gap:8px;padding:16px 32px;background:var(--gold);color:#08080A;border-radius:3px;font-family:var(--mono);font-size:11px;font-weight:500;letter-spacing:.1em;text-transform:uppercase;text-decoration:none;transition:all .2s}
+.cta-btn:hover{transform:translateY(-2px);box-shadow:0 14px 40px rgba(201,168,76,0.3)}
+
+.disclaimer{font-size:12px;color:var(--t4);line-height:1.6;margin-top:64px;padding-top:32px;border-top:.5px solid var(--bdr)}
+
+.back-link{display:inline-flex;align-items:center;gap:8px;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);text-decoration:none;margin-bottom:48px;transition:color .2s}
+.back-link:hover{color:var(--t2)}
+.back-link::before{content:'←'}
+
+@media(max-width:600px){
+  .skip-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nbrand" href="/">
+    <span class="nwm">Gold Standard <em>ORB</em></span>
+  </a>
+  <div class="nr">
+    <a class="nl" href="/blog">Blog</a>
+    <a class="nb" href="/#get-guide">Free Guide</a>
+  </div>
+</nav>
+
+<div class="article-wrap">
+  <a class="back-link" href="/blog">All Articles</a>
+
+  <div class="art-eyebrow">
+    <span class="art-tag">Strategy · Execution</span>
+    <div class="art-sep"></div>
+    <span class="art-date">April 2026</span>
+  </div>
+
+  <h1>Gold Opening Range <em>Breakout</em><br>A Complete Framework for the NY Session</h1>
+
+  <p class="art-sub">The New York opening range on Gold is not just a price level — it is a structured event that repeats every trading day. Understanding what creates it, what qualifies a breakout, and how to manage the trade from entry to close is the complete framework. Here it is.</p>
+
+  <div class="art-meta">
+    <div class="art-meta-item">Read time: <span>11 min</span></div>
+    <div class="art-meta-item">Level: <span>Beginner–Intermediate</span></div>
+    <div class="art-meta-item">Instrument: <span>XAUUSD</span></div>
+  </div>
+
+  <div class="toc">
+    <div class="toc-label">In this article</div>
+    <ol>
+      <li><a href="#why-gold-orb">Why Gold is the best instrument for opening range breakout</a></li>
+      <li><a href="#before-range-forms">Before the range forms — what you must read first</a></li>
+      <li><a href="#the-range-itself">The opening range — how it forms and what qualifies it</a></li>
+      <li><a href="#qualifying-breakout">What qualifies as a valid breakout</a></li>
+      <li><a href="#stops-and-targets">Stops, breakeven, and targets</a></li>
+      <li><a href="#when-to-skip">When to skip the session entirely</a></li>
+      <li><a href="#common-mistakes">Common ORB mistakes on Gold</a></li>
+    </ol>
+  </div>
+
+  <h2 id="why-gold-orb">Why Gold Is the Best Instrument for Opening Range Breakout</h2>
+
+  <p>Opening range breakout (ORB) strategies exist for many instruments. The concept is simple: define the price range formed in the first minutes of a session, then trade the move when price breaks clearly beyond that range.</p>
+
+  <p>Gold (XAUUSD) has specific properties that make it exceptionally well-suited to this approach — and specifically well-suited to the New York session open.</p>
+
+  <p><strong>It moves.</strong> Gold is one of the most volatile instruments available to retail traders. A single NY session can produce moves of $15–$40 per ounce, which translates to meaningful range breakouts even with conservative position sizing.</p>
+
+  <p><strong>The NY open is its most structured period.</strong> Unlike equities, which trade continuously, Gold's intraday behaviour follows predictable session transitions. The NY open — where the COMEX Gold market begins active trading — consistently produces the clearest directional moves of the day.</p>
+
+  <p><strong>It responds to preparation.</strong> Traders who understand what happened in the London session, and have classified it correctly, approach the NY open with informational advantage. The breakout direction is often obvious from the context — not guaranteed, but informed.</p>
+
+  <p><strong>It is clean on the M1 timeframe.</strong> Gold on a one-minute chart during the NY session shows textbook breakout and retest patterns. Candle body quality is visible and measurable. The entry signals are mechanical, not interpretive.</p>
+
+  <div class="pull-quote">"The NY open is not random. It is the release of positioning that was set up hours before."</div>
+
+  <h2 id="before-range-forms">Before the Range Forms — What You Must Read First</h2>
+
+  <p>The single most common ORB mistake is treating the opening range as the starting point. It is not. The starting point is understanding what happened before it.</p>
+
+  <p>Gold's intraday structure follows a consistent three-phase pattern across every trading day:</p>
+
+  <p><strong>Tokyo (Asian session):</strong> Price consolidates, typically within a clearly defined range. This range is not noise. The high and low of the Asian session mark where early positioning has taken place. These levels are watched by professionals and frequently targeted for liquidity sweeps later in the session.</p>
+
+  <p><strong>London:</strong> Volume increases. London frequently sweeps the Asian high or low — appearing to break in one direction before reversing. This is the manipulation phase. It clears out retail stop orders and repositions before the real directional move. How London behaves determines how confident you can be in the subsequent NY breakout.</p>
+
+  <p><strong>New York:</strong> The directional move. If London has swept the Asian high and reversed sharply, the NY setup may be a clean short breakout. If London has compressed within the Asian range without committing to either direction, the NY breakout may be the first real move of the day. Each London behaviour type produces a different quality of NY setup.</p>
+
+  <div class="callout">
+    <div class="callout-label">The mandatory preparation checklist</div>
+    <p>Before the opening range forms at 13:30 UTC, you must have read: the Asian session high, low, and direction; whether London swept either Asian extreme; whether London reversed cleanly or continued; the direction of price relative to the EMA 200 on the M5 chart; and the location of the previous day's high and low. This is non-negotiable. Trading the ORB without this context is guessing, not trading.</p>
+  </div>
+
+  <h2 id="the-range-itself">The Opening Range — How It Forms and What Qualifies It</h2>
+
+  <p>The opening range is the high and low of price action in the first 15 minutes of the NY session. On Gold, that window runs from <strong>13:30 to 13:45 UTC</strong> (adjusted for DST transitions). The boundaries of that window become the trade levels.</p>
+
+  <h3>The range must be valid before you consider it</h3>
+
+  <p>Not every opening range is worth trading. There are two range quality checks:</p>
+
+  <p><strong>Too tight:</strong> If the range is extremely narrow, there is no meaningful tension to release into a breakout. The range has not built up enough directional pressure. A range this tight is statistically more likely to produce a false break than a genuine move.</p>
+
+  <p><strong>Too wide:</strong> An abnormally large opening range — typically the result of a high-impact news event or unexpected price shock — produces an OR that spans what would normally be a significant portion of the session move. Trading a breakout of an already-large range offers poor risk-to-reward mechanics and elevated likelihood of erratic follow-through.</p>
+
+  <p>The width check is not intuition — it is a comparison of the opening range against the current Average True Range of the M1 candles. A normal range sits between half and eight times a standard single candle's range. Outside those boundaries, the session is skipped.</p>
+
+  <div class="rule-block">
+    <div class="rule-label">Range validity rule</div>
+    <p>OR width must be between 0.5× and 8.0× of the M1 ATR (14-period RMA) at 13:45 UTC. Outside this range: no trade, session recorded as skipped.</p>
+  </div>
+
+  <h2 id="qualifying-breakout">What Qualifies as a Valid Breakout</h2>
+
+  <p>Price breaking the opening range high or low is not, by itself, a valid entry signal. Most retail ORB traders enter at the first break of the range boundary. This is one of the most reliable ways to get taken out by false breakouts.</p>
+
+  <p>A valid breakout on this system meets all of the following criteria:</p>
+
+  <div class="criteria-list">
+    <div class="criterion">
+      <div class="crit-num">01</div>
+      <div class="crit-body">
+        <h4>Candle closes outside the range boundary</h4>
+        <p>A wick through the level is not a breakout. The M1 candle body must close beyond the opening range high or low. Wicks do not count.</p>
+      </div>
+    </div>
+    <div class="criterion hard-gate">
+      <div class="crit-num">02</div>
+      <div class="crit-body">
+        <h4>Body is more than 60% of total candle range</h4>
+        <p>This is the hard filter — the non-negotiable criterion. A breakout candle with a large wick relative to its body is showing rejection, not conviction. A body greater than 60% of total candle height (high to low) indicates genuine directional momentum.</p>
+      </div>
+    </div>
+    <div class="criterion">
+      <div class="crit-num">03</div>
+      <div class="crit-body">
+        <h4>First breakout attempt of the session</h4>
+        <p>The first breakout candle after the range forms outperforms subsequent attempts significantly. If the range has already been probed in one direction, the second probe in the same direction carries less edge. First candle only is the discipline standard.</p>
+      </div>
+    </div>
+    <div class="criterion">
+      <div class="crit-num">04</div>
+      <div class="crit-body">
+        <h4>Bias is aligned</h4>
+        <p>The EMA 200 on the M5 chart must permit the direction. Long setups require price above a flat or rising EMA. Short setups require price below a flat or falling EMA. A long breakout against a clearly falling EMA is taken at reduced confidence — if at all.</p>
+      </div>
+    </div>
+    <div class="criterion">
+      <div class="crit-num">05</div>
+      <div class="crit-body">
+        <h4>The path to target is clear</h4>
+        <p>Before entry, the space between entry and target is checked for significant levels — previous day high/low, Asian session extremes, London session extremes. One level that sits in the path caps the target at that level. Multiple blocking levels means the setup is skipped.</p>
+      </div>
+    </div>
+  </div>
+
+  <h3>The preferred entry pattern: break, retest, reclaim</h3>
+
+  <p>The highest-quality ORB entries on Gold follow a three-step sequence. First, a M1 candle closes outside the range boundary with a body greater than 60%. Second, price pulls back to the range boundary — what was resistance becomes support (for a long), or what was support becomes resistance (for a short). Third, a M1 candle closes back in the breakout direction. This reclaim candle is the entry.</p>
+
+  <p>This pattern is slower than entering on the initial break, which means you will miss some moves. What you gain is a significantly higher rate of valid continuation, and a tighter entry relative to the structural stop.</p>
+
+  <h3>The secondary pattern: momentum expansion</h3>
+
+  <p>Occasionally a breakout candle is so clearly committed — large body, minimal wicks, ATR expanding — that the retest pattern is not required. In these cases, entry on the next candle open is appropriate. The move must be unambiguous. When in doubt, wait for the retest.</p>
+
+  <h2 id="stops-and-targets">Stops, Breakeven, and Targets</h2>
+
+  <p>Every element of trade management is defined before entry. There are no in-trade decisions.</p>
+
+  <table class="levels-table">
+    <thead>
+      <tr>
+        <th>Level</th>
+        <th>Position</th>
+        <th>Direction</th>
+        <th>Rule</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td><strong>Stop loss</strong></td>
+        <td>Opposite OR boundary</td>
+        <td><span class="tag tag-both">Both</span></td>
+        <td>Structural stop — placed before entry, never moved against the trade</td>
+      </tr>
+      <tr>
+        <td><strong>Breakeven</strong></td>
+        <td>Entry price</td>
+        <td><span class="tag tag-both">Both</span></td>
+        <td>Stop moves to entry the moment price reaches entry + the full OR width (1R). Automatic, no delay.</td>
+      </tr>
+      <tr>
+        <td><strong>Primary target</strong></td>
+        <td>Entry + 2.5× OR width</td>
+        <td><span class="tag tag-both">Both</span></td>
+        <td>Or the nearest named level (PDH/PDL) — whichever is closer. Set before entry.</td>
+      </tr>
+      <tr>
+        <td><strong>Extension</strong></td>
+        <td>Entry + 3.5× OR width</td>
+        <td><span class="tag tag-both">Both</span></td>
+        <td>Only when momentum is clearly sustained. At 2R, lock stop to 2R before holding. Not the default.</td>
+      </tr>
+    </tbody>
+  </table>
+
+  <p>The stop is not placed at entry minus a buffer. It is placed at the opposite boundary of the opening range — the level that, if breached, means the breakout has failed entirely. This makes the stop distance equal to the full opening range width, which becomes 1R. Position size is calculated from this stop distance to control risk.</p>
+
+  <div class="callout">
+    <div class="callout-label">Why structural stops outperform buffer stops</div>
+    <p>A stop placed within the opening range — just below entry — sits inside normal NY open noise. It is likely to be triggered by routine wick activity before the trade has had a chance to develop. A stop at the opposite OR boundary only fires if the entire breakout hypothesis is wrong. This produces fewer stop-outs on valid trades, at the cost of a slightly wider stop distance compensated by smaller position sizing.</p>
+  </div>
+
+  <h3>The early exit rule</h3>
+
+  <p>If a M1 candle closes back inside the opening range from the breakout side — and holds there on the following candle — exit immediately. The trade has failed. This is not a judgement call. It is a rule.</p>
+
+  <h3>Session cutoff</h3>
+
+  <p>No new entries are taken after 14:45 UTC. This is a hard cutoff. Open trades continue to run to their stop or target regardless of time. This rule prevents late entries with insufficient time to develop and eliminates the 14:45–16:00 UTC period when momentum frequently wanes.</p>
+
+  <h2 id="when-to-skip">When to Skip the Session Entirely</h2>
+
+  <p>Sitting out a session is a valid — and often correct — decision. The following conditions mean no trade is taken:</p>
+
+  <div class="skip-grid">
+    <div class="skip-card">
+      <h4>Rule 4 London profile</h4>
+      <p>Multiple direction reversals in London with no readable narrative. The NY session has no context to build on. No trade, session logged as skipped.</p>
+    </div>
+    <div class="skip-card">
+      <h4>High-impact news within the trade window</h4>
+      <p>FOMC decisions, CPI releases, NFP, and similar events override normal ORB structure. Within ±10 minutes of release, behaviour is news-driven, not technical.</p>
+    </div>
+    <div class="skip-card">
+      <h4>Range too tight or too wide</h4>
+      <p>If the opening range fails the ATR width check, no trade is considered. The range has been distorted — either by insufficient volume or an unusual news event.</p>
+    </div>
+    <div class="skip-card">
+      <h4>Scorecard below threshold</h4>
+      <p>Every potential entry is assessed against a checklist before execution. If the score does not meet the minimum required for the London profile type, no entry is taken. This is not discretionary — it is the rule.</p>
+    </div>
+  </div>
+
+  <p>Skipped sessions are not lost sessions. They are sessions where the system worked correctly. Logging them alongside traded sessions reveals, over time, whether your skips are producing better or worse outcomes than the trades — which is genuinely useful data.</p>
+
+  <h2 id="common-mistakes">Common ORB Mistakes on Gold</h2>
+
+  <p><strong>Entering on a wick, not a candle close.</strong> A wick through the range boundary is price testing the level. A candle close is price accepting the new level. These are not the same thing. Entries on wicks produce significantly worse outcomes.</p>
+
+  <p><strong>Entering without reading the London session.</strong> A Gold ORB trade taken without understanding the London profile is a trade without context. You are reacting to price without knowing whether the setup has any structural support. The London session is not optional context — it is the primary filter.</p>
+
+  <p><strong>Moving the stop before breakeven.</strong> If price is approaching the stop, the correct action is to wait. Moving the stop widens risk, disrupts the expected R-multiple, and removes the only decision that was already made correctly. The stop is at the level it is for a reason. If it fires, the trade was wrong. That is fine.</p>
+
+  <p><strong>Trading every breakout regardless of candle body quality.</strong> The 60% body rule eliminates the majority of false breakouts. Traders who skip this filter — because "it looked convincing" — will encounter significantly more false entries. The filter exists specifically to remove the setups that look convincing but are not.</p>
+
+  <p><strong>Taking a second trade in the same direction after the first is stopped.</strong> Two maximum trades per session, and if the daily loss limit of two losing trades is hit, the session ends. A stopped trade is not a signal to try the same setup again with a second position. The system has already told you the setup failed.</p>
+
+  <div class="callout">
+    <div class="callout-label">The defining discipline</div>
+    <p>A consistent Gold ORB trader is not someone who finds better setups. They are someone who applies the same criteria, in the same order, without deviation, across every session. The edge is in the consistency of application — not the cleverness of the analysis.</p>
+  </div>
+
+  <p>The free London Profiles guide below covers the session classification system in full — the four London profile types, what each one tells you about the NY open, and how to use this information before the opening range forms.</p>
+
+  <div class="cta-block">
+    <div class="cta-label">Free Resource</div>
+    <h3 class="cta-h">The 4 London <em>Profiles</em> Guide</h3>
+    <p class="cta-p">The missing piece in most ORB frameworks. Understand how the four London session profiles classify every trading day — and how to use that classification before the NY opening range forms.</p>
+    <a class="cta-btn" href="/#get-guide">Get the Free Guide →</a>
+  </div>
+
+  <p class="disclaimer">Not financial advice. Trading CFDs and spot Gold involves significant risk of loss. Past performance does not guarantee future results. This article is for educational purposes only.</p>
+</div>
+
+</body>
+</html>
