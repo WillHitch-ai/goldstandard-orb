@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Articles — Gold Standard ORB</title>
+<meta name="description" content="Strategy, process and market analysis from the Gold Standard ORB system. Rules-based XAUUSD day trading education.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --gold:#C9A84C;--gl:#E8D5A3;--gb:#F0E0A0;--gd:#7A6430;
+  --bg:#08080A;--bg2:#0F0F12;--bg3:#161619;--bg4:#1E1E22;
+  --t:#F4F0EA;--t2:#C8C2B8;--t3:#7A756E;--t4:#3E3B36;
+  --bdr:rgba(201,168,76,0.12);--bdm:rgba(201,168,76,0.25);--bds:rgba(201,168,76,0.42);
+  --green:#5DBF8A;--red:#E06060;
+  --df:'Cormorant Garamond',serif;--mono:'DM Mono',monospace;--body:'DM Sans',sans-serif;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--t);font-family:var(--body);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+.cglow{position:fixed;pointer-events:none;z-index:9999;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(201,168,76,0.055) 0%,transparent 70%);transform:translate(-50%,-50%);mix-blend-mode:screen}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,40px);background:rgba(8,8,10,0.82);backdrop-filter:blur(20px);border-bottom:.5px solid var(--bdr);transition:background .3s}
+nav.scrolled{background:rgba(8,8,10,0.97)}
+.ndrop{position:relative}
+.ndbtn{background:none;border:none;cursor:pointer;font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);padding:6px 10px;transition:color .2s}
+.ndbtn:hover,.ndrop.open .ndbtn{color:var(--t2)}
+.ndmenu{display:none;position:absolute;top:calc(100% + 8px);right:0;min-width:260px;background:var(--bg3);border:.5px solid var(--bdm);border-radius:6px;overflow:hidden;box-shadow:0 16px 48px rgba(0,0,0,0.6);z-index:600}
+.ndrop.open .ndmenu{display:block}
+.nditem{display:flex;flex-direction:column;gap:3px;padding:12px 16px;text-decoration:none;transition:background .15s}
+.nditem:hover{background:var(--bg4)}
+.ndi-label{font-family:var(--mono);font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--t2);display:flex;align-items:center;gap:8px}
+.ndi-badge{background:rgba(201,168,76,0.15);border:.5px solid rgba(201,168,76,0.3);color:var(--gold);padding:1px 6px;border-radius:2px;font-size:9px}
+.ndi-desc{font-size:11px;color:var(--t3);line-height:1.4}
+.ndivider{height:.5px;background:var(--bdr);margin:2px 0}
+.nbrand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nwm{font-family:var(--df);font-size:17px;font-weight:300;letter-spacing:.04em;color:var(--gl);line-height:1}
+.nwm em{font-style:italic;color:var(--gold)}
+.nr{display:flex;align-items:center;gap:8px}
+.nl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);text-decoration:none;padding:6px 10px;transition:color .2s}
+.nl:hover,.nl.active{color:var(--gold)}
+.nb{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);background:rgba(201,168,76,0.1);border:.5px solid var(--bds);padding:9px 18px;border-radius:3px;text-decoration:none;white-space:nowrap;transition:background .2s,transform .15s}
+.nb:hover{background:rgba(201,168,76,0.2);transform:translateY(-1px)}
+.blog-header{padding:120px clamp(20px,5vw,60px) 64px;max-width:800px;margin:0 auto}
+.ovl{font-family:var(--mono);font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--gd);display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.ovl::before{content:'';width:24px;height:.5px;background:var(--gd)}
+.dh2{font-family:var(--df);font-size:clamp(42px,8vw,72px);font-weight:300;letter-spacing:-.02em;line-height:1.05;margin-bottom:16px}
+.dh2 em{font-style:italic;color:var(--gold)}
+.blog-desc{font-size:16px;color:var(--t3);line-height:1.75;max-width:520px}
+.hrgold{height:.5px;background:linear-gradient(90deg,transparent,var(--bdm),transparent)}
+.blog-list{max-width:800px;margin:0 auto;padding:0 clamp(20px,5vw,60px) 100px}
+.cat-filter{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:48px;padding-top:32px}
+.cat-btn{font-family:var(--mono);font-size:9px;letter-spacing:.12em;text-transform:uppercase;padding:6px 14px;border:.5px solid var(--bdr);border-radius:2px;background:none;color:var(--t4);cursor:pointer;transition:all .2s}
+.cat-btn:hover{color:var(--t3);border-color:var(--bdm)}
+.cat-btn.active{color:var(--gold);border-color:var(--bds);background:rgba(201,168,76,0.06)}
+.article-card{display:grid;grid-template-columns:1fr auto;gap:20px;align-items:start;padding:32px 0;border-bottom:.5px solid var(--bdr);text-decoration:none;transition:all .2s;cursor:pointer}
+.article-card:first-child{border-top:.5px solid var(--bdr)}
+.article-card:hover .ac-title{color:var(--gold)}
+.article-card:hover .ac-arrow{transform:translateX(4px);color:var(--gold)}
+.ac-meta{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+.ac-cat{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gd)}
+.ac-dot{width:3px;height:3px;border-radius:50%;background:var(--t4);flex-shrink:0}
+.ac-read{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--t4)}
+.ac-title{font-family:var(--df);font-size:clamp(20px,4vw,28px);font-weight:300;letter-spacing:-.01em;line-height:1.2;color:var(--t);margin-bottom:10px;transition:color .2s}
+.ac-title em{font-style:italic;color:var(--gold)}
+.ac-summary{font-size:13px;color:var(--t3);line-height:1.7;max-width:560px}
+.ac-tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:14px}
+.ac-tag{font-family:var(--mono);font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:var(--t4);padding:3px 8px;border:.5px solid var(--bdr);border-radius:2px}
+.ac-arrow{font-family:var(--mono);font-size:18px;color:var(--t4);transition:all .2s;align-self:center;flex-shrink:0;padding-top:4px}
+.no-results{padding:48px 0;font-family:var(--mono);font-size:11px;letter-spacing:.08em;color:var(--t4);text-align:center}
+footer{padding:32px clamp(20px,5vw,60px) 40px;border-top:.5px solid var(--bdr);text-align:center}
+.fbrand{display:inline-flex;align-items:center;gap:8px;text-decoration:none;margin-bottom:18px}
+.fn{font-family:var(--df);font-size:14px;font-weight:300;color:var(--t3)}
+.fn em{font-style:italic;color:var(--gd)}
+.flinks{display:flex;justify-content:center;gap:24px;margin-bottom:20px;flex-wrap:wrap}
+.flinks a{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--t4);text-decoration:none;transition:color .2s}
+.flinks a:hover{color:var(--t3)}
+.fdisc{font-size:11px;color:var(--t4);line-height:1.8;max-width:480px;margin:0 auto}
+.rev{opacity:0;transform:translateY(20px);transition:opacity .6s cubic-bezier(.16,1,.3,1),transform .6s cubic-bezier(.16,1,.3,1)}
+.rev.vis{opacity:1;transform:translateY(0)}
+.d1{transition-delay:.05s}.d2{transition-delay:.1s}.d3{transition-delay:.15s}
+@media(max-width:599px){.nl{display:none}.ac-arrow{display:none}.article-card{grid-template-columns:1fr}.cat-filter{gap:6px}}
+</style>
+</head>
+<body>
+<div class="cglow" id="cg"></div>
+
+<nav id="nav">
+  <a href="/" class="nbrand">
+    <canvas id="nc" width="28" height="28" style="width:28px;height:28px;flex-shrink:0"></canvas>
+    <span class="nwm">Gold Standard <em>ORB</em></span>
+  </a>
+  <div class="nr">
+    <a href="/blog" class="nl active">Articles</a>
+    <div class="ndrop" id="ndrop">
+      <button class="nl ndbtn" onclick="toggleDrop()" aria-expanded="false" aria-haspopup="true">Resources &#9662;</button>
+      <div class="ndmenu" id="ndmenu" role="menu">
+        <a href="/blog" class="nditem" role="menuitem">
+          <span class="ndi-label">Articles</span>
+          <span class="ndi-desc">Strategy, process &amp; market analysis</span>
+        </a>
+        <div class="ndivider"></div>
+        <a href="https://store.goldstandardorb.com" target="_blank" rel="noopener" class="nditem" role="menuitem">
+          <span class="ndi-label">Complete ORB System <span class="ndi-badge">&pound;999</span></span>
+          <span class="ndi-desc">Full dashboard, education guide &amp; analytics</span>
+        </a>
+        <a href="/#get-guide" class="nditem" role="menuitem">
+          <span class="ndi-label">Free London Profiles Guide</span>
+          <span class="ndi-desc">The four profiles &mdash; free, instant download</span>
+        </a>
+        <div class="ndivider"></div>
+        <a href="https://www.amazon.co.uk/dp/9798255044726" target="_blank" rel="noopener" class="nditem" role="menuitem">
+          <span class="ndi-label">Trading Journal</span>
+          <span class="ndi-desc">Physical journal &mdash; Amazon KDP &pound;12.99</span>
+        </a>
+      </div>
+    </div>
+    <a href="/#get-guide" class="nb">Free guide</a>
+  </div>
+</nav>
+
+<div class="blog-header">
+  <div class="ovl rev"><span>Gold Standard ORB</span></div>
+  <h1 class="dh2 rev d1">Strategy. Process. <em>Edge.</em></h1>
+  <p class="blog-desc rev d2">Articles on rules-based Gold trading &mdash; how the system works, why the filters exist, and what separates traders who improve from those who don&rsquo;t.</p>
+</div>
+
+<div class="hrgold"></div>
+
+<div class="blog-list">
+
+  <div class="cat-filter rev">
+    <button class="cat-btn active" onclick="filterCat('all',this)">All</button>
+    <button class="cat-btn" onclick="filterCat('Strategy',this)">Strategy</button>
+    <button class="cat-btn" onclick="filterCat('Psychology',this)">Psychology</button>
+    <button class="cat-btn" onclick="filterCat('Technical',this)">Technical</button>
+    <button class="cat-btn" onclick="filterCat('System',this)">System Design</button>
+  </div>
+
+  <div id="article-list">
+
+    <a class="article-card rev" href="/blog/blog-post-10-early-exit-or-pullback.html" data-cats="Strategy">
+      <div>
+        <div class="ac-meta">
+          <span class="ac-cat">Strategy &middot; Trade Management</span>
+          <span class="ac-dot"></span>
+          <span class="ac-read">5 min read</span>
+        </div>
+        <div class="ac-title">When Price Pulls Back Into the OR: <em>Exit Early or Hold to Stop?</em></div>
+        <p class="ac-summary">A M1 candle closing back inside the Opening Range is a structural failure signal. The data says exit immediately &mdash; not because the trade feels bad, but because holding to the stop is the lower-expectancy decision.</p>
+        <div class="ac-tags">
+          <span class="ac-tag">Trade Management</span>
+          <span class="ac-tag">Early Exit</span>
+          <span class="ac-tag">Opening Range</span>
+          <span class="ac-tag">Risk</span>
+        </div>
+      </div>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+
+    <a class="article-card rev" href="/blog/blog-post-9-news-volatility-london-manipulation.html" data-cats="Strategy">
+      <div>
+        <div class="ac-meta">
+          <span class="ac-cat">Strategy &middot; Market Structure</span>
+          <span class="ac-dot"></span>
+          <span class="ac-read">9 min read</span>
+        </div>
+        <div class="ac-title">Why News Volatility <em>Destroys</em> Most Gold Traders</div>
+        <p class="ac-summary">High-impact news events cause volatility spikes that take out stop losses before reversing. How the AMD framework reads the manipulation, why the spike is the setup &mdash; not the trade &mdash; and how Rule 2 classification turns news days into some of the cleanest setups in the system.</p>
+        <div class="ac-tags">
+          <span class="ac-tag">News Events</span>
+          <span class="ac-tag">Volatility</span>
+          <span class="ac-tag">Rule 2</span>
+          <span class="ac-tag">AMD</span>
+        </div>
+      </div>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+
+    <a class="article-card rev d1" href="/blog/blog-post-8-gold-opening-range-breakout-ny-session.html" data-cats="Strategy">
+      <div>
+        <div class="ac-meta">
+          <span class="ac-cat">Strategy &middot; Execution</span>
+          <span class="ac-dot"></span>
+          <span class="ac-read">11 min read</span>
+        </div>
+        <div class="ac-title">Gold Opening Range Breakout: <em>A Complete Framework for the NY Session</em></div>
+        <p class="ac-summary">Full ORB framework for XAUUSD from first principles. Pre-range preparation, range validity check, five-criterion breakout qualification including the 60% body hard gate, break-retest-reclaim entry pattern, structural stop placement, and the six most common ORB mistakes on Gold.</p>
+        <div class="ac-tags">
+          <span class="ac-tag">ORB</span>
+          <span class="ac-tag">Opening Range</span>
+          <span class="ac-tag">NY Session</span>
+          <span class="ac-tag">Entry Patterns</span>
+        </div>
+      </div>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+
+    <a class="article-card rev d2" href="/blog/blog-post-7-strategy-vs-system-gold-trading.html" data-cats="Psychology System">
+      <div>
+        <div class="ac-meta">
+          <span class="ac-cat">Psychology &middot; System Design</span>
+          <span class="ac-dot"></span>
+          <span class="ac-read">9 min read</span>
+        </div>
+        <div class="ac-title">Strategy Isn&rsquo;t Enough: <em>What a Complete Trading System Actually Looks Like</em></div>
+        <p class="ac-summary">Six specific failure modes that derail traders who have a strategy but not a system &mdash; inconsistent sizing, no context filters, moving stops, no daily limits, trading every session, no review. Each with a direct system fix.</p>
+        <div class="ac-tags">
+          <span class="ac-tag">Psychology</span>
+          <span class="ac-tag">Discipline</span>
+          <span class="ac-tag">System Design</span>
+          <span class="ac-tag">Rules-Based</span>
+        </div>
+      </div>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+
+    <a class="article-card rev d3" href="/blog/blog-post-6-complete-gold-trading-system.html" data-cats="Strategy System">
+      <div>
+        <div class="ac-meta">
+          <span class="ac-cat">Strategy &middot; System Design</span>
+          <span class="ac-dot"></span>
+          <span class="ac-read">10 min read</span>
+        </div>
+        <div class="ac-title">The Complete Gold Trading System: <em>From Zero to Your First Trade</em></div>
+        <p class="ac-summary">The distinction between a strategy and a system &mdash; and why most traders only have the former. Five pillars of a complete system, the AMD session structure explained, and a five-step build sequence from learning through to live track record.</p>
+        <div class="ac-tags">
+          <span class="ac-tag">Complete System</span>
+          <span class="ac-tag">XAUUSD</span>
+          <span class="ac-tag">Beginner</span>
+          <span class="ac-tag">Session Structure</span>
+        </div>
+      </div>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+
+    <a class="article-card rev" href="/blog/blog-post-5-rule-4-days.html" data-cats="Psychology">
+      <div>
+        <div class="ac-meta">
+          <span class="ac-cat">Psychology &middot; Process</span>
+          <span class="ac-dot"></span>
+          <span class="ac-read">6 min read</span>
+        </div>
+        <div class="ac-title">Rule 4 Days: <em>The Trade You Shouldn&rsquo;t Take</em></div>
+        <p class="ac-summary">What makes a London whipsaw session different, why the structure that makes the ORB work is absent on Rule 4 days, and why choosing not to trade is an active, skilled decision &mdash; not a passive one.</p>
+        <div class="ac-tags">
+          <span class="ac-tag">London Profiles</span>
+          <span class="ac-tag">Discipline</span>
+          <span class="ac-tag">Rule 4</span>
+        </div>
+      </div>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+
+    <a class="article-card rev d1" href="/blog/blog-post-4-amd-framework.html" data-cats="Strategy">
+      <div>
+        <div class="ac-meta">
+          <span class="ac-cat">Strategy &middot; Market Structure</span>
+          <span class="ac-dot"></span>
+          <span class="ac-read">7 min read</span>
+        </div>
+        <div class="ac-title">The AMD Framework: <em>Why New York Is the Only Session Worth Trading</em></div>
+        <p class="ac-summary">Accumulation, Manipulation, Distribution &mdash; the three-phase daily cycle that explains why London sweeps levels before NY reverses. Understanding this is the foundation of London profile classification.</p>
+        <div class="ac-tags">
+          <span class="ac-tag">AMD</span>
+          <span class="ac-tag">Market Structure</span>
+          <span class="ac-tag">NY Session</span>
+        </div>
+      </div>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+
+    <a class="article-card rev d2" href="/blog/blog-post-3-atr-filter.html" data-cats="Technical Strategy">
+      <div>
+        <div class="ac-meta">
+          <span class="ac-cat">Strategy &middot; Technical</span>
+          <span class="ac-dot"></span>
+          <span class="ac-read">7 min read</span>
+        </div>
+        <div class="ac-title">What the ATR Filter Actually Does <em>(And Why Most ORB Traders Skip It)</em></div>
+        <p class="ac-summary">Why average true range is the most underused quality filter in opening range strategies &mdash; what a distorted OR looks like, what the valid range window is, and why skipping this check leads to entering genuinely bad sessions.</p>
+        <div class="ac-tags">
+          <span class="ac-tag">ATR</span>
+          <span class="ac-tag">Opening Range</span>
+          <span class="ac-tag">Risk Management</span>
+        </div>
+      </div>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+
+    <a class="article-card rev d3" href="/blog/blog-post-2-why-traders-never-improve.html" data-cats="Psychology">
+      <div>
+        <div class="ac-meta">
+          <span class="ac-cat">Psychology &middot; Process</span>
+          <span class="ac-dot"></span>
+          <span class="ac-read">7 min read</span>
+        </div>
+        <div class="ac-title">Why Most Traders Never Improve &mdash; <em>And the One Habit That Changes It</em></div>
+        <p class="ac-summary">Outcome data versus process data &mdash; why most trading journals are useless, what a structured session log actually reveals after 50 sessions, and a practical framework for building the feedback loop that actually drives improvement.</p>
+        <div class="ac-tags">
+          <span class="ac-tag">Trading Journal</span>
+          <span class="ac-tag">Discipline</span>
+          <span class="ac-tag">Process</span>
+        </div>
+      </div>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+
+    <a class="article-card rev" href="/blog/blog-post-1-xauusd-one-hour-trading.html" data-cats="Strategy">
+      <div>
+        <div class="ac-meta">
+          <span class="ac-cat">Strategy &middot; XAUUSD</span>
+          <span class="ac-dot"></span>
+          <span class="ac-read">8 min read</span>
+        </div>
+        <div class="ac-title">How to Day Trade Gold <em>in One Hour a Day</em></div>
+        <p class="ac-summary">A complete walkthrough of the system structure &mdash; why the NY open, the four-step session framework from pre-session preparation through hard close, London profile classification with position sizes, and why rules-based execution outperforms discretion.</p>
+        <div class="ac-tags">
+          <span class="ac-tag">NY Session</span>
+          <span class="ac-tag">London Profiles</span>
+          <span class="ac-tag">Opening Range</span>
+        </div>
+      </div>
+      <span class="ac-arrow">&#8594;</span>
+    </a>
+
+    <div class="no-results" id="no-results" style="display:none">No articles in this category yet.</div>
+
+  </div>
+</div>
+
+<div class="hrgold"></div>
+
+<footer>
+  <a href="/" class="fbrand">
+    <canvas id="fc" width="16" height="16" style="width:16px;height:16px;flex-shrink:0"></canvas>
+    <span class="fn">Gold Standard <em>ORB</em></span>
+  </a>
+  <div class="flinks">
+    <a href="https://x.com/orbgold" target="_blank" rel="noopener">@orbgold</a>
+    <a href="/blog">Articles</a>
+    <a href="/#get-guide">Free guide</a>
+    <a href="/privacy.html">Privacy policy</a>
+  </div>
+  <p class="fdisc">Not financial advice. Trading CFDs and spot Gold involves significant risk of loss. Past performance does not guarantee future results. Never risk capital you cannot afford to lose.</p>
+</footer>
+
+<script>
+const cg=document.getElementById('cg');
+document.addEventListener('mousemove',e=>{cg.style.left=e.clientX+'px';cg.style.top=e.clientY+'px'},{passive:true});
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',scrollY>40),{passive:true});
+function toggleDrop(){var d=document.getElementById('ndrop');var open=d.classList.toggle('open');d.querySelector('.ndbtn').setAttribute('aria-expanded',open);}
+document.addEventListener('click',function(e){var d=document.getElementById('ndrop');if(d&&!d.contains(e.target)){d.classList.remove('open');d.querySelector('.ndbtn').setAttribute('aria-expanded','false');}});
+const ro=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('vis')}),{threshold:.07,rootMargin:'0px 0px -20px 0px'});
+document.querySelectorAll('.rev').forEach(el=>ro.observe(el));
+function filterCat(cat,btn){
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  const cards=document.querySelectorAll('.article-card');
+  let visible=0;
+  cards.forEach(card=>{
+    if(cat==='all'||card.dataset.cats.includes(cat)){card.style.display='grid';visible++;}
+    else{card.style.display='none';}
+  });
+  document.getElementById('no-results').style.display=visible===0?'block':'none';
+}
+function dc(c,sz,a){if(!c)return;const x=c.getContext('2d');c.width=sz;c.height=sz;const cx=sz/2,cy=sz/2,r=sz/2-1;x.clearRect(0,0,sz,sz);x.strokeStyle='rgba(201,168,76,0.5)';x.lineWidth=.5;x.beginPath();x.arc(cx,cy,r,0,Math.PI*2);x.stroke();const pts=[{a:a,l:r*.7,w:1.5,c:'rgba(201,168,76,0.9)'},{a:a+Math.PI,l:r*.4,w:1,c:'rgba(201,168,76,0.35)'},{a:a+Math.PI/2,l:r*.35,w:.75,c:'rgba(201,168,76,0.2)'},{a:a-Math.PI/2,l:r*.35,w:.75,c:'rgba(201,168,76,0.2)'}];pts.forEach(p=>{x.strokeStyle=p.c;x.lineWidth=p.w;x.beginPath();x.moveTo(cx,cy);x.lineTo(cx+Math.sin(p.a)*p.l,cy-Math.cos(p.a)*p.l);x.stroke();});x.fillStyle='rgba(201,168,76,0.6)';x.beginPath();x.arc(cx,cy,1.5,0,Math.PI*2);x.fill();}
+function drawStatic(){dc(document.getElementById('fc'),16,0);}
+try{drawStatic();}catch(e){}
+window.addEventListener('load',drawStatic);
+(function(){function init(){const nc=document.getElementById('nc');if(!nc){requestAnimationFrame(init);return;}let a=0;(function spin(){a+=.003;dc(nc,28,a);requestAnimationFrame(spin);})();}window.addEventListener('load',()=>requestAnimationFrame(init));})();
+</script>
+</body>
+</html>
