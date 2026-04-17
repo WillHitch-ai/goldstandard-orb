@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Where to Place Your Stop Loss on Gold — Structural Stops vs Fixed Pips — Gold Standard ORB</title>
+<meta name="description" content="The case against fixed-pip and ATR-buffer stops on XAUUSD, and why structural stops tied to the opening range are the only sensible approach. A complete framework for stop placement.">
+<meta name="keywords" content="stop loss gold trading, XAUUSD stop loss placement, structural stop loss, where to place stops gold, opening range stop, ATR stop XAUUSD, gold day trading risk">
+<meta name="author" content="Gold Standard ORB">
+<link rel="canonical" href="https://goldstandardorb.com/blog/blog-post-14-structural-stops-vs-fixed-pips-gold.html">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Where to Place Your Stop Loss on Gold — Structural Stops vs Fixed Pips">
+<meta property="og:description" content="The case against fixed-pip and ATR-buffer stops on XAUUSD, and why structural stops tied to the opening range are the only sensible approach. A complete framework for stop placement.">
+<meta property="og:url" content="https://goldstandardorb.com/blog/blog-post-14-structural-stops-vs-fixed-pips-gold.html">
+<meta property="og:site_name" content="Gold Standard ORB">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:site" content="@orbgold">
+<meta name="twitter:title" content="Where to Place Your Stop Loss on Gold — Structural Stops vs Fixed Pips">
+<meta name="twitter:description" content="The case against fixed-pip and ATR-buffer stops on XAUUSD, and why structural stops tied to the opening range are the only sensible approach. A complete framework for stop placement.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Article","headline":"Where to Place Your Stop Loss on Gold — Structural Stops vs Fixed Pips","description":"The case against fixed-pip and ATR-buffer stops on XAUUSD, and why structural stops tied to the opening range are the only sensible approach. A complete framework for stop placement.","author":{"@type":"Organization","name":"Gold Standard ORB","url":"https://goldstandardorb.com"},"publisher":{"@type":"Organization","name":"Gold Standard ORB","url":"https://goldstandardorb.com"},"datePublished":"2026-04-17","dateModified":"2026-04-17","mainEntityOfPage":{"@type":"WebPage","@id":"https://goldstandardorb.com/blog/blog-post-14-structural-stops-vs-fixed-pips-gold.html"}}
+</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{--gold:#C9A84C;--gl:#E8D5A3;--gd:#7A6430;--bg:#08080A;--bg2:#0F0F12;--bg3:#161619;--t:#F4F0EA;--t2:#C8C2B8;--t3:#7A756E;--t4:#3E3B36;--bdr:rgba(201,168,76,0.12);--bdm:rgba(201,168,76,0.25);--bds:rgba(201,168,76,0.42);--df:'Cormorant Garamond',serif;--mono:'DM Mono',monospace;--body:'DM Sans',sans-serif;}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;font-size:16px}
+body{background:var(--bg);color:var(--t);font-family:var(--body);line-height:1.65;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+nav{position:fixed;top:0;left:0;right:0;z-index:500;height:60px;display:flex;align-items:center;justify-content:space-between;padding:0 clamp(16px,4vw,40px);background:rgba(8,8,10,0.92);backdrop-filter:blur(20px);border-bottom:.5px solid var(--bdr)}
+.nbrand{display:flex;align-items:center;gap:10px;text-decoration:none;flex-shrink:0}
+.nwm{font-family:var(--df);font-size:17px;font-weight:300;letter-spacing:.04em;color:var(--gl);line-height:1}
+.nwm em{font-style:italic;color:var(--gold)}
+.nl{font-family:var(--mono);font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--t3);text-decoration:none;padding:6px 10px;transition:color .2s}
+.nl:hover{color:var(--t2)}
+.wrap{max-width:680px;margin:0 auto;padding:110px clamp(20px,5vw,40px) 60px}
+.breadcrumb{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--t4);margin-bottom:32px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.breadcrumb a{color:var(--gd);text-decoration:none;transition:color .2s}
+.breadcrumb a:hover{color:var(--gold)}
+.breadcrumb span{color:var(--t4)}
+.tag-row{font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+h1{font-family:var(--df);font-size:clamp(32px,6.5vw,52px);font-weight:300;letter-spacing:-.02em;line-height:1.08;margin-bottom:10px}
+h1 em{font-style:italic;color:var(--gold)}
+.meta{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--t4);margin-bottom:28px}
+.lede{font-family:var(--df);font-size:clamp(18px,2.4vw,22px);font-weight:300;line-height:1.5;color:var(--t);margin-bottom:32px;font-style:italic}
+.hrgold{height:.5px;background:linear-gradient(90deg,transparent,var(--bdm),transparent);margin:36px 0}
+h2{font-family:var(--mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--gold);margin-bottom:14px;margin-top:48px}
+h2:first-of-type{margin-top:0}
+h3{font-family:var(--df);font-size:22px;font-weight:400;color:var(--t);margin-bottom:12px;margin-top:28px;letter-spacing:-.01em}
+p{font-size:15px;color:var(--t2);line-height:1.8;margin-bottom:16px;font-family:var(--body)}
+p:last-child{margin-bottom:0}
+p a{color:var(--gold);text-decoration:none;border-bottom:.5px solid rgba(201,168,76,0.3);transition:border-color .2s}
+p a:hover{border-color:var(--gold)}
+strong{color:var(--t);font-weight:500}
+em{font-style:italic;color:var(--gl)}
+ul,ol{list-style:none;margin-bottom:16px;margin-top:4px}
+ul li,ol li{font-size:15px;color:var(--t2);line-height:1.8;padding-left:22px;position:relative;margin-bottom:8px;font-family:var(--body)}
+ul li::before{content:'→';font-family:var(--mono);font-size:11px;color:var(--gd);position:absolute;left:0;top:3px}
+ol{counter-reset:ol-counter}
+ol li{counter-increment:ol-counter}
+ol li::before{content:counter(ol-counter,decimal-leading-zero);font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--gold);font-weight:500;top:4px}
+.callout{background:var(--bg2);border:.5px solid var(--bdr);border-radius:4px;padding:20px 22px;margin:28px 0}
+.callout p{margin-bottom:0;font-size:14px}
+.callout-gold{background:rgba(201,168,76,0.05);border:.5px solid rgba(201,168,76,0.22);border-radius:4px;padding:20px 22px;margin:28px 0}
+.callout-gold p{margin-bottom:0;font-size:14px;color:var(--t2)}
+.callout-gold strong{color:var(--gold)}
+.callout-label{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:8px;display:block}
+table{width:100%;border-collapse:collapse;margin:24px 0;font-family:var(--body);font-size:13px}
+table th,table td{text-align:left;padding:12px 14px;border-bottom:.5px solid var(--bdr);color:var(--t2);line-height:1.6;vertical-align:top}
+table th{font-family:var(--mono);font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);font-weight:500;border-bottom:.5px solid var(--bdm)}
+table tr:last-child td{border-bottom:none}
+.cta-block{background:var(--bg2);border:.5px solid var(--bdm);border-radius:6px;padding:32px 28px;margin:48px 0 40px;text-align:center}
+.cta-block h3{font-family:var(--df);font-size:26px;font-weight:400;color:var(--gl);margin-bottom:10px;margin-top:0;letter-spacing:-.01em}
+.cta-block p{font-size:14px;color:var(--t2);max-width:460px;margin:0 auto 20px}
+.cta-btn{display:inline-block;padding:12px 26px;background:var(--gold);color:var(--bg);font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;font-weight:500;text-decoration:none;border-radius:3px;transition:background .2s}
+.cta-btn:hover{background:var(--gl)}
+.related{margin-top:56px;padding-top:32px;border-top:.5px solid var(--bdr)}
+.related h2{margin-top:0}
+.related-grid{display:grid;grid-template-columns:1fr;gap:14px;margin-top:16px}
+.related-card{padding:18px 20px;background:var(--bg2);border:.5px solid var(--bdr);border-radius:4px;text-decoration:none;transition:border-color .2s}
+.related-card:hover{border-color:var(--bdm)}
+.related-cat{font-family:var(--mono);font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--gd);margin-bottom:6px;display:block}
+.related-title{font-family:var(--df);font-size:18px;font-weight:400;color:var(--t);line-height:1.3;letter-spacing:-.01em}
+footer{border-top:.5px solid var(--bdr);padding:36px clamp(20px,5vw,40px);text-align:center;margin-top:40px}
+.fdisc{font-size:11px;color:var(--t4);line-height:1.8;max-width:520px;margin:0 auto}
+.flinks{display:flex;justify-content:center;gap:24px;margin-bottom:14px;flex-wrap:wrap}
+.flinks a{font-family:var(--mono);font-size:10px;letter-spacing:.08em;color:var(--t4);text-decoration:none;transition:color .2s}
+.flinks a:hover{color:var(--t3)}
+@media(min-width:700px){.related-grid{grid-template-columns:1fr 1fr 1fr}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="../index.html" class="nbrand"><span class="nwm">Gold Standard <em>ORB</em></span></a>
+  <a href="index.html" class="nl">← All articles</a>
+</nav>
+
+<article class="wrap">
+  <div class="breadcrumb">
+    <a href="../index.html">Home</a><span>›</span>
+    <a href="index.html">Articles</a><span>›</span>
+    <span>Where to Place Stops on Gold</span>
+  </div>
+  
+  <div class="tag-row">Risk Management · Execution · 10 min read</div>
+  <h1>Where to Place Your <em>Stop Loss</em> on Gold</h1>
+  <p class="meta">Published April 2026</p>
+  <p class="lede">Every trader who loses money on Gold loses it at their stop loss. Most get stopped out not because the trade was wrong, but because the stop was in a place that guaranteed they would be.</p>
+  
+  <div class="hrgold"></div>
+  
+
+  <h2>The stop-placement problem</h2>
+  <p>A stop loss is not a safety device. It is a decision about what market behaviour invalidates your trade thesis. Done right, a stop fires only when the reason for the trade has genuinely broken down. Done wrong, a stop fires constantly, on noise, shaking you out of trades that would have worked — and training you, over months, to hesitate on every entry.</p>
+  <p>Retail XAUUSD traders get this wrong in predictable ways. This article walks through the three most common approaches, explains why the first two fail on Gold, and lays out the structural approach used in the Gold Standard ORB system.</p>
+
+  <h2>Approach 1 — Fixed pip stops</h2>
+  <p>"I always use a 30 pip stop." This is the worst approach to stop placement on Gold, and it is also the most common.</p>
+  <p>Spot XAUUSD trades with wildly variable volatility. In quiet Asia and early London, a 30 pip range can span 15 minutes. In high-volatility NY conditions or during a news event, a 30 pip move can happen in a single M1 candle. A fixed pip stop ignores this — it assumes volatility is constant. It never is.</p>
+  <p>The practical effect is that fixed-pip stops get hit at random. On a quiet day, 30 pips is three times the noise threshold — the stop is safe but the position size is too small to be meaningful. On a volatile day, 30 pips is less than a single candle's range — the stop gets taken out by the next breath of air.</p>
+  <p>The problem is not the 30 pips. The problem is the idea of a fixed pip stop on a variable-volatility instrument.</p>
+
+  <h2>Approach 2 — ATR-buffer stops</h2>
+  <p>A step better: "I place my stop 0.5× ATR below my entry." This scales with volatility — bigger ATR means bigger stop, quieter day means tighter stop. On paper, it addresses the fixed-pip problem.</p>
+  <p>In practice, on XAUUSD at the NY open, it fails for a different reason. The NY open has characteristic behaviour — it frequently prints one or two sharp, wicky M1 candles immediately after the opening range forms. These candles are part of the normal discovery process. They are noise, not signal. A breakout that gets taken by an ATR-buffer stop because of a 45-second wick in the first three minutes of NY is a breakout that probably would have worked.</p>
+  <p>The Gold Standard ORB system used ATR-buffer stops in its early development. They were retired after extensive testing. The issue is that ATR measures average movement — but NY open wicks are often well above average. Being one standard deviation below the average does not save you from the tail.</p>
+  <p>ATR-buffer stops are an improvement on fixed pips. They are still not good enough for this session.</p>
+
+  <h2>Approach 3 — Structural stops</h2>
+  <p>The structural approach places your stop at a level that has <em>technical significance</em> — a level that, if broken, would genuinely invalidate the trade thesis.</p>
+  <p>For an opening range breakout, the structural level is the opposite side of the opening range. If you have gone long on a break of the OR high, your stop sits at the OR low. If short on a break of the OR low, your stop sits at the OR high.</p>
+  <p>The logic is precise. If you entered because price broke out of the OR, then the thesis is that price will <em>not</em> return to the other side of the OR. If price does return to the other side, the thesis has been falsified. The trade is genuinely over, not temporarily inconvenienced.</p>
+  <p>A structural stop tells you: "if the OR breakout fails completely, I'm out. Nothing less takes me out." That is a meaningful stop. It fires when the reason for the trade no longer exists, and at no other time.</p>
+
+  <div class="callout-gold">
+    <span class="callout-label">The trade-off</span>
+    <p>Structural stops are wider than ATR-buffer stops. The implication is that position size is smaller, because risk per trade is fixed at 1R. You trade fewer pips per R, but you get stopped out far less often. Over a sample of 100 trades, the structural approach produces higher expectancy than the buffer approach — because the avoided false stops more than compensate for the slightly smaller per-trade size.</p>
+  </div>
+
+  <h2>How the math works</h2>
+  <p>Here is a concrete example. Assume you are on a standard account, risk per trade = 1 percent of balance, account balance = £10,000, so risk in £ = £100.</p>
+  <p>Opening range: high 2650.50, low 2649.50. OR width = 100 pips.</p>
+  <p>Your entry is at 2650.65 (breakout candle closes above OR high, retest, reclaim). Your stop is at 2649.50 (OR low).</p>
+  <p>Stop distance = 2650.65 − 2649.50 = 115 pips. Your position size is calculated so that 115 pips = £100 = 1R. That's your position size for this trade.</p>
+  <p>Your take profit at 2.5R is 2650.65 + (2.5 × 1.15) = 2653.53. Your take profit at 3.5R (if conditions warrant extension) is 2650.65 + (3.5 × 1.15) = 2654.68.</p>
+  <p>The arithmetic is clean. The stop is meaningful. The position size adjusts automatically based on OR width. You never have to decide in the moment what pip distance to use — it's derived from the structure.</p>
+
+  <h2>Break-even and the 1R trigger</h2>
+  <p>Once the trade reaches entry + 1R (i.e. price has moved in your favour by the stop distance), the stop moves to the entry price. Your worst outcome is now zero, not minus 1R.</p>
+  <p>The 1R break-even rule is non-discretionary. It does not wait for you to feel comfortable. It does not require confirmation. The second price prints at entry + 1R, the stop moves to entry. No second-guessing.</p>
+  <p>The 1R rule exists because it asymmetrically changes the distribution of outcomes. Before 1R, a full stop is possible. After 1R, a full stop is impossible — you can only reach 0R, 2.5R, or somewhere in between. That shift in outcome distribution is what gives the system its positive expectancy over time.</p>
+
+  <h2>What "never widen a stop" really means</h2>
+  <p>A rule that appears in almost every trading textbook: never widen a stop. Most traders nod at it, then widen stops anyway — usually because price is approaching the stop and the widening feels like it "gives the trade a chance".</p>
+  <p>The structural approach removes the temptation by making the stop meaningful. If the stop is at the OR low, and price is pushing towards the OR low, the thesis is genuinely in trouble. Widening the stop in that moment is not giving the trade a chance — it is denying that the thesis is failing. You are paying for information (that the breakout is not holding) by refusing to process it.</p>
+  <p>A structural stop, once placed, is non-negotiable. Moving it is not a strategy. It is a psychological symptom.</p>
+
+  <h2>The cost of getting stops wrong</h2>
+  <p>Traders who use fixed-pip or ATR-buffer stops on XAUUSD tend to show a recognisable P&amp;L curve: lots of small losses, occasional wins that do not quite cover them, and a slow grinding drawdown over weeks and months. The trades are not the problem — the stops are. They are getting taken out at normal-noise levels, on trades that would have reached target if the stop had been properly placed.</p>
+  <p>The fix is not more aggressive stop placement. It is structural stop placement. Wider stop, smaller position, same R-risk per trade, dramatically fewer stop-outs.</p>
+  <p>That is the shift from looking busy to making money.</p>
+
+
+  <div class="cta-block">
+    <h3>The Four London Profiles — Free Guide</h3>
+    <p>The exact classification framework referenced throughout this article. Visual examples of each profile, the position-size rules, and the score thresholds that govern them. No spam, unsubscribe anytime.</p>
+    <a href="../index.html#get-guide" class="cta-btn">Get the free guide →</a>
+  </div>
+
+  <div class="related">
+    <h2>Keep reading</h2>
+    <div class="related-grid">
+      <a href="blog-post-17-risk-per-trade-gold-xauusd.html" class="related-card">
+      <span class="related-cat">Risk Management</span>
+      <span class="related-title">Risk Per Trade — The R Multiple Framework</span>
+    </a><a href="blog-post-3-atr-filter.html" class="related-card">
+      <span class="related-cat">Technical</span>
+      <span class="related-title">What the ATR Filter Actually Does</span>
+    </a><a href="blog-post-11-ny-session-gold-trading-strategy.html" class="related-card">
+      <span class="related-cat">Strategy</span>
+      <span class="related-title">The Complete NY Session Strategy</span>
+    </a>
+    </div>
+  </div>
+</article>
+
+<footer>
+  <div class="flinks">
+    <a href="../index.html">Home</a>
+    <a href="index.html">Articles</a>
+    <a href="../terms.html">Terms</a>
+    <a href="../privacy.html">Privacy</a>
+  </div>
+  <p class="fdisc">Not financial advice. Trading CFDs and spot Gold involves significant risk of loss. Past performance does not guarantee future results.</p>
+</footer>
+</body>
+</html>
