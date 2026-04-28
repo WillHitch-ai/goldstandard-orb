@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+  <!-- Homepage -->
+  <url>
+    <loc>https://goldstandardorb.com/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Blog index -->
+  <url>
+    <loc>https://goldstandardorb.com/blog/</loc>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Live blog posts -->
+  <url>
+    <loc>https://goldstandardorb.com/blog/blog-post-1-xauusd-one-hour-trading.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://goldstandardorb.com/blog/blog-post-2-why-traders-never-improve.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://goldstandardorb.com/blog/blog-post-3-atr-filter.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://goldstandardorb.com/blog/blog-post-4-amd-framework.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://goldstandardorb.com/blog/blog-post-5-rule-4-days.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://goldstandardorb.com/blog/blog-post-6-complete-gold-trading-system.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://goldstandardorb.com/blog/blog-post-7-strategy-vs-system-gold-trading.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://goldstandardorb.com/blog/blog-post-8-gold-opening-range-breakout-ny-session.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://goldstandardorb.com/blog/blog-post-9-why-i-stopped-trading-signals.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  <url>
+    <loc>https://goldstandardorb.com/blog/blog-post-10-early-exit-or-pullback.html</loc>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+
+</urlset>
